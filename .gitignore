@@ -26,3 +26,6 @@ replay_pid*
 #IntelliJ
 *.iml
 *.idea
+
+/orders.txt
+/rules.txt
