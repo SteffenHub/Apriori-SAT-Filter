@@ -1,0 +1,40 @@
+import apriori.Apriori;
+import item.Item;
+import item.ItemSet;
+import org.sat4j.specs.ContradictionException;
+import org.sat4j.specs.TimeoutException;
+import satSolver.SatSolver;
+import txtImportExport.TxtConverter;
+import txtImportExport.TxtReaderWriter;
+
+import java.io.IOException;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException, ContradictionException, TimeoutException {
+
+        List<int[]> regelWerk = TxtConverter.stringListToListOfIntArrays(TxtReaderWriter.getTxtFromSamePath("rules.txt"));
+        SatSolver satSolver = new SatSolver(regelWerk.toArray(new int[0][]));
+
+        List<String> readOrders = TxtReaderWriter.getTxtFromSamePath("orders.txt");
+        boolean[][] ordersBool = TxtConverter.listOfStringOrdersToBooleanArray(readOrders);
+
+
+        Apriori apriori = new Apriori(satSolver, ordersBool,3, 0.99);
+        HashMap<ItemSet, Double> allPossibleKombinationFiltered = apriori.run();
+
+
+        //save to directory
+        List<String> allPossibleKombinationFilteredString = new ArrayList<>();
+        for (ItemSet kombi: allPossibleKombinationFiltered.keySet()) {
+            StringBuilder line = new StringBuilder();
+            for (Item prDrin : kombi.toItemArray()) {
+                line.append(prDrin.getItemNumber()).append(" ");
+            }
+            line.append(allPossibleKombinationFiltered.get(kombi));
+            allPossibleKombinationFilteredString.add(line.toString());
+        }
+        TxtReaderWriter.writeListOfStrings("allPossibleKombinationFiltered.txt", allPossibleKombinationFilteredString);
+    }
+}
