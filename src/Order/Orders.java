@@ -4,9 +4,7 @@ import item.Item;
 import item.ItemSet;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Orders {
 
@@ -44,7 +42,6 @@ public class Orders {
     public Orders getWhichOrders(Item item){
         List<Order> isHere = new ArrayList<>();
         for (Order order : this.orders) {
-
             if (order.isIn(item)){
                 isHere.add(order);
             }
@@ -59,7 +56,7 @@ public class Orders {
      * @return the intersection of this and the other orders
      */
     public Orders intersection(Orders orders) {
-        Set<Order> result = new HashSet<>();
+        List<Order> result = new ArrayList<>();
         int i = 0;
         int j = 0;
         while (i < this.orders.length && j < orders.getOrders().length) {
