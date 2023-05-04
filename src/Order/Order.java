@@ -19,4 +19,8 @@ public class Order {
     public int getOrderNumber() {
         return orderNumber;
     }
+
+    public int howManyItems(){
+        return this.itemsBool.length;
+    }
 }

@@ -1,3 +1,4 @@
+import Order.Orders;
 import apriori.Apriori;
 import item.Item;
 import item.ItemSet;
@@ -20,8 +21,8 @@ public class Main {
         List<String> readOrders = TxtReaderWriter.getTxtFromSamePath("orders.txt");
         boolean[][] ordersBool = TxtConverter.listOfStringOrdersToBooleanArray(readOrders);
 
-
-        Apriori apriori = new Apriori(satSolver, ordersBool,3, 0.99);
+        Orders orders = new Orders(ordersBool);
+        Apriori apriori = new Apriori(satSolver, orders, 3, 0.99);
         HashMap<ItemSet, Double> allPossibleKombinationFiltered = apriori.run();
 
 

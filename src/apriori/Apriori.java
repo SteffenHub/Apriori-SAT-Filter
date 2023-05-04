@@ -13,12 +13,12 @@ public class Apriori {
 
     private final double minSupport;
     private final SatSolver satSolver;
-    private final boolean[][] ordersBool;
+    private final Orders orders;
     private final int toWhichDepth;
 
-    public Apriori(SatSolver satSolver, boolean[][] ordersBool, int toWhichDepth, double minSupport) {
+    public Apriori(SatSolver satSolver, Orders orders, int toWhichDepth, double minSupport) {
         this.satSolver = satSolver;
-        this.ordersBool = ordersBool;
+        this.orders = orders;
         this.toWhichDepth = toWhichDepth;
         this.minSupport = minSupport;
     }
@@ -27,9 +27,7 @@ public class Apriori {
 
         HashMap<ItemSet, Double> result = new HashMap<>();
 
-        Orders orders = new Orders(ordersBool);
-
-        Item[] items = this.createItems(ordersBool[0].length);
+        Item[] items = this.createItems(this.orders.getOrders()[0].howManyItems());
 
         //The items, which are still considered and fulfill the minSupport
         Set<Item> stillPossibleItems = new HashSet<>(Arrays.asList(items));
@@ -80,7 +78,7 @@ public class Apriori {
                         }
                     }
 
-                    double support = orders.getSupport(union);
+                    double support = this.orders.getSupport(union);
 
                     if (support >= minSupport) {
                         currentSet.put(union, support);
