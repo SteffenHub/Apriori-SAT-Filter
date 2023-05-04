@@ -15,6 +15,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException, ContradictionException, TimeoutException {
 
+        boolean saveMoreInterimResults = false;
+
         List<int[]> regelWerk = TxtConverter.stringListToListOfIntArrays(TxtReaderWriter.getTxtFromSamePath("rules.txt"));
         SatSolver satSolver = new SatSolver(regelWerk.toArray(new int[0][]));
 
@@ -22,7 +24,7 @@ public class Main {
         boolean[][] ordersBool = TxtConverter.listOfStringOrdersToBooleanArray(readOrders);
 
         Orders orders = new Orders(ordersBool);
-        Apriori apriori = new Apriori(satSolver, orders, 3, 0.99);
+        Apriori apriori = new Apriori(satSolver, orders, 3, 0.80, saveMoreInterimResults);
         HashMap<ItemSet, Double> allPossibleKombinationFiltered = apriori.run();
 
 

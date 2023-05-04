@@ -21,7 +21,7 @@ public class Orders {
         this.orders = orders;
     }
 
-    public double getSupport(ItemSet itemSet) {
+    public double getSupport(ItemSet itemSet, boolean saveMoreInterimResults) {
 
         if (itemSet.getItemArray().length == 0) return 0.0;
 
@@ -32,9 +32,17 @@ public class Orders {
             }
         }
 
-        Orders intersection = itemSet.getItemArray()[0].getInWhichOrders();
-        for (int i = 1; i < itemSet.getItemArray().length; i++) {
-            intersection = intersection.intersection(itemSet.getItemArray()[i].getInWhichOrders());
+        Orders intersection;
+        if (itemSet.getPreviousItemSet() != null && itemSet.getPreviousItemSet().getInWhichOrders() != null && itemSet.getNewItem() != null) {
+            intersection = itemSet.getPreviousItemSet().getInWhichOrders().intersection(itemSet.getNewItem().getInWhichOrders());
+        }else{
+            intersection = itemSet.getItemArray()[0].getInWhichOrders();
+            for (int i = 1; i < itemSet.getItemArray().length; i++) {
+                intersection = intersection.intersection(itemSet.getItemArray()[i].getInWhichOrders());
+            }
+        }
+        if (saveMoreInterimResults) {
+            itemSet.setInWhichOrders(intersection);
         }
         return (double) intersection.getOrders().length / this.orders.length;
     }

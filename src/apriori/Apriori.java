@@ -16,11 +16,14 @@ public class Apriori {
     private final Orders orders;
     private final int toWhichDepth;
 
-    public Apriori(SatSolver satSolver, Orders orders, int toWhichDepth, double minSupport) {
+    private final boolean saveMoreInterimResults;
+
+    public Apriori(SatSolver satSolver, Orders orders, int toWhichDepth, double minSupport, boolean saveMoreInterimResults) {
         this.satSolver = satSolver;
         this.orders = orders;
         this.toWhichDepth = toWhichDepth;
         this.minSupport = minSupport;
+        this.saveMoreInterimResults = saveMoreInterimResults;
     }
 
     public HashMap<ItemSet, Double> run() throws TimeoutException {
@@ -59,7 +62,12 @@ public class Apriori {
                     ++counter;
                     System.out.println(counter + "/" + stillPossibleItemArray.length * keyList.size());
 
-                    ItemSet union = itemSet.union(new ItemSet(new Item[]{item}));
+                    ItemSet union;
+                    if (this.saveMoreInterimResults) {
+                        union = new ItemSet(itemSet, item);
+                    }else{
+                        union = itemSet.union(new ItemSet(new Item[]{item}));
+                    }
 
                     //check if this configuration was already reversed e.g. [0,1] and [1,0].
                     if (currentSet.containsKey(union)) {
@@ -78,7 +86,7 @@ public class Apriori {
                         }
                     }
 
-                    double support = this.orders.getSupport(union);
+                    double support = this.orders.getSupport(union, saveMoreInterimResults);
 
                     if (support >= minSupport) {
                         currentSet.put(union, support);
