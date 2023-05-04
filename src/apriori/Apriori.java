@@ -67,7 +67,7 @@ public class Apriori {
                     }
 
                     //if a PR is added to the configuration, which is already in this configuration or is not selectable
-                    if (union.toItemArray().length < depth || !satSolver.isSatisfiableWithConjunct(union.toIntArray())) {
+                    if (union.getItemArray().length < depth || !satSolver.isSatisfiableWithConjunct(union.toIntArray())) {
                         continue;
                     }
 
@@ -91,7 +91,7 @@ public class Apriori {
             List<ItemSet> newConfigurationsFromThisCalculation = new ArrayList<>(currentSet.keySet());
             stillPossibleItems = new HashSet<>();
             for (ItemSet prSet : newConfigurationsFromThisCalculation) {
-                stillPossibleItems.addAll(Arrays.asList(prSet.toItemArray()));
+                stillPossibleItems.addAll(Arrays.asList(prSet.getItemArray()));
             }
             ++depth;
             System.out.println(currentSet.size());
@@ -112,7 +112,7 @@ public class Apriori {
     private void print(ItemSet itemSet, double support) {
         int[] itemArray = itemSet.toIntArray();
         for (int i = 0; i < itemArray.length; i++) {
-            System.out.print(itemSet.toItemArray()[i].getItemNumber());
+            System.out.print(itemSet.getItemArray()[i].getItemNumber());
             if (i + 1 < itemArray.length) {
                 System.out.print(" AND ");
             }

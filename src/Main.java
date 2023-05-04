@@ -30,7 +30,7 @@ public class Main {
         List<String> allPossibleKombinationFilteredString = new ArrayList<>();
         for (ItemSet kombi: allPossibleKombinationFiltered.keySet()) {
             StringBuilder line = new StringBuilder();
-            for (Item prDrin : kombi.toItemArray()) {
+            for (Item prDrin : kombi.getItemArray()) {
                 line.append(prDrin.getItemNumber()).append(" ");
             }
             line.append(allPossibleKombinationFiltered.get(kombi));

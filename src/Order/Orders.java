@@ -25,18 +25,18 @@ public class Orders {
 
     public double getSupport(ItemSet itemSet) {
 
-        if (itemSet.toItemArray().length == 0) return 0.0;
+        if (itemSet.getItemArray().length == 0) return 0.0;
 
         //check if all inWhichOrders is correct else search them
-        for (Item item : itemSet.toItemArray()) {
+        for (Item item : itemSet.getItemArray()) {
             if (item.getInWhichOrders() == null){
                 item.setInWhichOrders(this.getWhichOrders(item));
             }
         }
 
-        Orders intersection = itemSet.toItemArray()[0].getInWhichOrders();
-        for (int i = 1; i < itemSet.toItemArray().length; i++) {
-            intersection = intersection.intersection(itemSet.toItemArray()[i].getInWhichOrders());
+        Orders intersection = itemSet.getItemArray()[0].getInWhichOrders();
+        for (int i = 1; i < itemSet.getItemArray().length; i++) {
+            intersection = intersection.intersection(itemSet.getItemArray()[i].getInWhichOrders());
         }
         return (double) intersection.getOrders().length / this.orders.length;
     }
