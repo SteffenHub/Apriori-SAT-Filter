@@ -1,52 +1,82 @@
 package Order;
 
+import item.Item;
 import item.ItemSet;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Orders {
 
-    private final int ordersSize;
+    private final Order[] orders;
 
-    public Orders(int ordersSize) {
-        this.ordersSize = ordersSize;
+    public Orders(boolean[][] ordersBool) {
+        this.orders = new Order[ordersBool.length];
+        for (int i = 0; i < ordersBool.length; i++) {
+            orders[i] = new Order(ordersBool[i], i+1);
+        }
+    }
+
+    public Orders(Order[] orders){
+        this.orders = orders;
     }
 
     public double getSupport(ItemSet itemSet) {
-        int[] itemSetArray = itemSet.toIntArray();
-        if (itemSetArray.length == 0) {
-            return 0.0;
+
+        if (itemSet.toItemArray().length == 0) return 0.0;
+
+        //check if all inWhichOrders is correct else search them
+        for (Item item : itemSet.toItemArray()) {
+            if (item.getInWhichOrders() == null){
+                item.setInWhichOrders(this.getWhichOrders(item));
+            }
         }
-        int[] intersection = itemSet.toItemArray()[0].getInWhichOrders();
-        for (int i = 1; i < itemSetArray.length; i++) {
-            intersection = this.intersection(intersection, itemSet.toItemArray()[i].getInWhichOrders());
+
+        Orders intersection = itemSet.toItemArray()[0].getInWhichOrders();
+        for (int i = 1; i < itemSet.toItemArray().length; i++) {
+            intersection = intersection.intersection(itemSet.toItemArray()[i].getInWhichOrders());
         }
-        return (double) intersection.length / this.ordersSize;
+        return (double) intersection.getOrders().length / this.orders.length;
+    }
+
+    public Orders getWhichOrders(Item item){
+        List<Order> isHere = new ArrayList<>();
+        for (Order order : this.orders) {
+
+            if (order.isIn(item)){
+                isHere.add(order);
+            }
+        }
+        return new Orders(isHere.toArray(new Order[0]));
     }
 
     /**
-     * Forms the intersection of two int arrays.
+     * Forms the intersection of two orders.
      *
-     * @param array1 first int array
-     * @param array2 second int array
-     * @return the intersection of the two arrays
+     * @param orders the other orders
+     * @return the intersection of this and the other orders
      */
-    public int[] intersection(int[] array1, int[] array2) {
-        Set<Integer> result = new HashSet<>();
+    public Orders intersection(Orders orders) {
+        Set<Order> result = new HashSet<>();
         int i = 0;
         int j = 0;
-        while (i < array1.length && j < array2.length) {
-            if (array1[i] < array2[j]) {
+        while (i < this.orders.length && j < orders.getOrders().length) {
+            if (this.orders[i].getOrderNumber() < orders.getOrders()[j].getOrderNumber()) {
                 i++;
-            } else if (array1[i] > array2[j]) {
+            } else if (this.orders[i].getOrderNumber() > orders.getOrders()[j].getOrderNumber()) {
                 j++;
             } else {
-                result.add(array1[i]);
+                result.add(this.orders[i]);
                 i++;
                 j++;
             }
         }
-        return result.stream().mapToInt(Integer::intValue).toArray();
+        return new Orders(result.toArray(new Order[0]));
+    }
+
+    public Order[] getOrders(){
+        return this.orders;
     }
 }

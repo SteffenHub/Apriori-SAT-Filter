@@ -1,7 +1,6 @@
 package item;
 
-import java.util.ArrayList;
-import java.util.List;
+import Order.Orders;
 
 public class Item {
 
@@ -10,25 +9,23 @@ public class Item {
      */
     private final int itemNumber;
 
-    private final int[] iAmInThisOrders;
+    private Orders iAmInThisOrders;
 
-    public Item(int itemNumber, boolean[][] OrdersBool) {
+    public Item(int itemNumber) {
         this.itemNumber = itemNumber;
-        List<Integer> isHere = new ArrayList<>();
-        for (int i = 0; i < OrdersBool.length; i++) {
-            if (OrdersBool[i][this.itemNumber - 1]) {
-                isHere.add(i);
-            }
-        }
-        this.iAmInThisOrders = isHere.stream().mapToInt(Integer::intValue).toArray();
+        this.iAmInThisOrders = null;
     }
 
     public int getItemNumber() {
         return this.itemNumber;
     }
 
-    public int[] getInWhichOrders() {
+    public Orders getInWhichOrders() {
         return this.iAmInThisOrders;
+    }
+
+    public void setInWhichOrders(Orders orders){
+        this.iAmInThisOrders = orders;
     }
 
 }

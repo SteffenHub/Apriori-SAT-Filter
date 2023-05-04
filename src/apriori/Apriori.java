@@ -27,7 +27,7 @@ public class Apriori {
 
         HashMap<ItemSet, Double> result = new HashMap<>();
 
-        Orders orders = new Orders(ordersBool.length);
+        Orders orders = new Orders(ordersBool);
 
         Item[] items = this.createItems(ordersBool[0].length);
 
@@ -106,7 +106,7 @@ public class Apriori {
     private Item[] createItems(int howManyItems) {
         Item[] items = new Item[howManyItems];
         for (int i = 0; i < items.length; i++) {
-            items[i] = new Item(i + 1, ordersBool);
+            items[i] = new Item(i + 1);
         }
         return items;
     }
