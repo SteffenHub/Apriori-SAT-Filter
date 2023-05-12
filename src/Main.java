@@ -21,6 +21,7 @@ public class Main {
         boolean saveMoreInterimResults = false;
         double minSupport = Double.NaN;
         double minConfidence = Double.NaN;
+        int depth = -1;
 
         //read args
         for (int i = 0; i < args.length; i++) {
@@ -34,8 +35,11 @@ public class Main {
             if (arg.equals("--caching")){
                 saveMoreInterimResults = args[i + 1].equals("true");
             }
+            if (arg.equals("--depth")){
+                depth = Integer.parseInt(args[i+1]);
+            }
         }
-        if (Double.isNaN(minSupport) || Double.isNaN(minConfidence)){
+        if (Double.isNaN(minSupport) || Double.isNaN(minConfidence) || depth == -1){
             System.out.println("Not enough parameters passed");
             return;
         }
@@ -47,7 +51,7 @@ public class Main {
         boolean[][] ordersBool = TxtConverter.listOfStringOrdersToBooleanArray(readOrders);
 
         Orders orders = new Orders(ordersBool);
-        Apriori apriori = new Apriori(satSolver, orders, 3, minSupport, saveMoreInterimResults);
+        Apriori apriori = new Apriori(satSolver, orders, depth, minSupport, saveMoreInterimResults);
         HashMap<ItemSet, Double> allPossibleKombinationFiltered = apriori.run();
 
 
