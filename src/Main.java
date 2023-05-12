@@ -19,6 +19,26 @@ public class Main {
     public static void main(String[] args) throws IOException, ContradictionException, TimeoutException {
 
         boolean saveMoreInterimResults = false;
+        double minSupport = Double.NaN;
+        double minConfidence = Double.NaN;
+
+        //read args
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            if (arg.equals("--minSupport")){
+                minSupport = Double.parseDouble(args[i+1]);
+            }
+            if (arg.equals("--minConfidence")){
+                minConfidence = Double.parseDouble(args[i+1]);
+            }
+            if (arg.equals("--caching")){
+                saveMoreInterimResults = args[i + 1].equals("true");
+            }
+        }
+        if (Double.isNaN(minSupport) || Double.isNaN(minConfidence)){
+            System.out.println("Not enough parameters passed");
+            return;
+        }
 
         List<int[]> regelWerk = TxtConverter.stringListToListOfIntArrays(TxtReaderWriter.getTxtFromSamePath("rules.txt"));
         SatSolver satSolver = new SatSolver(regelWerk.toArray(new int[0][]));
@@ -27,7 +47,7 @@ public class Main {
         boolean[][] ordersBool = TxtConverter.listOfStringOrdersToBooleanArray(readOrders);
 
         Orders orders = new Orders(ordersBool);
-        Apriori apriori = new Apriori(satSolver, orders, 3, 0.80, saveMoreInterimResults);
+        Apriori apriori = new Apriori(satSolver, orders, 3, minSupport, saveMoreInterimResults);
         HashMap<ItemSet, Double> allPossibleKombinationFiltered = apriori.run();
 
 
@@ -44,7 +64,7 @@ public class Main {
         TxtReaderWriter.writeListOfStrings("allPossibleKombinationFiltered.txt", allPossibleKombinationFilteredString);
 
         Conclusion[] allConclusions = new ConclusionBuilder(allPossibleKombinationFiltered).run();
-        allConclusions = new ConfidenceBuilder(allConclusions, orders, 0.8, saveMoreInterimResults).run();
+        allConclusions = new ConfidenceBuilder(allConclusions, orders, minConfidence, saveMoreInterimResults).run();
 
         //save to directory
         List<String> allConclusionsString = new ArrayList<>();
