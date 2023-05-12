@@ -159,11 +159,33 @@ public class ItemSet {
         return Arrays.deepHashCode(itemArray);
     }
 
+    public boolean contains(Item item){
+        for (Item itemInArray: this.getItemArray()) {
+            if (item.getItemNumber() == itemInArray.getItemNumber()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ItemSet getPreviousItemSet() {
         return previousItemSet;
     }
 
     public Item getNewItem() {
         return newItem;
+    }
+
+    @Override
+    public String toString(){
+        String output = "[";
+        for (int i = 0; i < this.getItemArray().length; i++) {
+            output += this.getItemArray()[i].getItemNumber();
+            if (i != this.getItemArray().length -1){
+                output += ",";
+            }
+        }
+        output += "]";
+        return output;
     }
 }

@@ -1,5 +1,7 @@
 import Order.Orders;
 import apriori.Apriori;
+import apriori.Conclusion;
+import apriori.ConclusionBuilder;
 import item.Item;
 import item.ItemSet;
 import org.sat4j.specs.ContradictionException;
@@ -39,5 +41,8 @@ public class Main {
             allPossibleKombinationFilteredString.add(line.toString());
         }
         TxtReaderWriter.writeListOfStrings("allPossibleKombinationFiltered.txt", allPossibleKombinationFilteredString);
+
+        Conclusion[] allConclusions = new ConclusionBuilder(allPossibleKombinationFiltered).run();
+
     }
 }
