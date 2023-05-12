@@ -20,6 +20,18 @@ public class Conclusion {
         this.confidence = confidence;
     }
 
+    public double getSupport(){
+        return this.support;
+    }
+
+    public ItemSet getCondition(){
+        return this.condition;
+    }
+
+    public double getConfidence(){
+        return this.confidence;
+    }
+
     @Override
     public String toString(){
         String output = "[";
@@ -36,7 +48,9 @@ public class Conclusion {
                 output += ",";
             }
         }
-        output += "]";
+        output += "] ";
+        output += "support: " + this.support + " ";
+        output += "confidence: " + this.confidence;
         return output;
     }
 

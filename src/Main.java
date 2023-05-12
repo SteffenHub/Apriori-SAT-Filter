@@ -2,6 +2,7 @@ import Order.Orders;
 import apriori.Apriori;
 import apriori.Conclusion;
 import apriori.ConclusionBuilder;
+import apriori.ConfidenceBuilder;
 import item.Item;
 import item.ItemSet;
 import org.sat4j.specs.ContradictionException;
@@ -43,6 +44,13 @@ public class Main {
         TxtReaderWriter.writeListOfStrings("allPossibleKombinationFiltered.txt", allPossibleKombinationFilteredString);
 
         Conclusion[] allConclusions = new ConclusionBuilder(allPossibleKombinationFiltered).run();
+        allConclusions = new ConfidenceBuilder(allConclusions, orders, 0.8, saveMoreInterimResults).run();
 
+        //save to directory
+        List<String> allConclusionsString = new ArrayList<>();
+        for (Conclusion conclusion : allConclusions) {
+            allConclusionsString.add(conclusion.toString());
+        }
+        TxtReaderWriter.writeListOfStrings("result.txt", allConclusionsString);
     }
 }
