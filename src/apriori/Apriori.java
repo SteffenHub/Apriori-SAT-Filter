@@ -60,7 +60,7 @@ public class Apriori {
                 //add all possible Items to this one
                 for (Item item : stillPossibleItemArray) {
                     ++counter;
-                    System.out.println(counter + "/" + stillPossibleItemArray.length * keyList.size());
+                    System.out.println(depth + "/" + toWhichDepth + " : " + counter + "/" + stillPossibleItemArray.length * keyList.size());
 
                     ItemSet union;
                     if (this.saveMoreInterimResults) {
