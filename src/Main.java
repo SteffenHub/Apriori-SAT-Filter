@@ -12,6 +12,8 @@ import txtImportExport.TxtConverter;
 import txtImportExport.TxtReaderWriter;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 public class Main {
@@ -43,6 +45,7 @@ public class Main {
             System.out.println("Not enough parameters passed");
             return;
         }
+        Instant start = Instant.now();
 
         List<int[]> regelWerk = TxtConverter.stringListToListOfIntArrays(TxtReaderWriter.getTxtFromSamePath("rules.txt"));
         SatSolver satSolver = new SatSolver(regelWerk.toArray(new int[0][]));
@@ -76,5 +79,9 @@ public class Main {
             allConclusionsString.add(conclusion.toString());
         }
         TxtReaderWriter.writeListOfStrings("result.txt", allConclusionsString);
+
+        Instant end = Instant.now();
+        Duration interval = Duration.between(start, end);
+        System.out.println("time for calculation: " + interval.getSeconds() + "sec");
     }
 }
