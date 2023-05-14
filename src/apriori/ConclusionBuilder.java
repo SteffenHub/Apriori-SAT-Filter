@@ -26,6 +26,7 @@ public class ConclusionBuilder {
 
     public Conclusion[] getPossibleConclusions(ItemSet itemSet, double support) {
         List<Conclusion> allConclusions = new ArrayList<>();
+        int lengthOfItemSet = itemSet.getItemArray().length;
         ItemSet[] allSubSets = this.getAllSubSets(itemSet);
         for (ItemSet subSet : allSubSets) {
             for (ItemSet subSetCompare: allSubSets) {
@@ -36,7 +37,7 @@ public class ConclusionBuilder {
                         break;
                     }
                 }
-                if (!exists){
+                if (!exists && subSet.getItemArray().length + subSetCompare.getItemArray().length == lengthOfItemSet){
                     allConclusions.add(new Conclusion(subSet, subSetCompare, support));
                 }
             }
