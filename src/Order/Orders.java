@@ -34,10 +34,22 @@ public class Orders {
 
         Orders intersection;
         if (itemSet.getPreviousItemSet() != null && itemSet.getPreviousItemSet().getInWhichOrders() != null && itemSet.getNewItem() != null) {
-            intersection = itemSet.getPreviousItemSet().getInWhichOrders().intersection(itemSet.getNewItem().getInWhichOrders());
+            if (itemSet.getPreviousItemSet().getInWhichOrders().getOrders().length < itemSet.getNewItem().getInWhichOrders().getOrders().length) {
+                intersection = itemSet.getPreviousItemSet().getInWhichOrders().intersection(itemSet.getNewItem().getInWhichOrders());
+            }else{
+                intersection = itemSet.getNewItem().getInWhichOrders().intersection(itemSet.getPreviousItemSet().getInWhichOrders());
+            }
         }else{
             intersection = itemSet.getItemArray()[0].getInWhichOrders();
+            int smallestOrderArrayIn = 0;
+            for (int i = 0; i < itemSet.getItemArray().length; i++) {
+                if (itemSet.getItemArray()[i].getInWhichOrders().getOrders().length < intersection.getOrders().length){
+                    intersection = itemSet.getItemArray()[i].getInWhichOrders();
+                    smallestOrderArrayIn = i;
+                }
+            }
             for (int i = 1; i < itemSet.getItemArray().length; i++) {
+                if (i == smallestOrderArrayIn) continue;
                 intersection = intersection.intersection(itemSet.getItemArray()[i].getInWhichOrders());
             }
         }
