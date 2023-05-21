@@ -48,7 +48,7 @@ public class Orders {
                     smallestOrderArrayIn = i;
                 }
             }
-            for (int i = 1; i < itemSet.getItemArray().length; i++) {
+            for (int i = 0; i < itemSet.getItemArray().length; i++) {
                 if (i == smallestOrderArrayIn) continue;
                 intersection = intersection.intersection(itemSet.getItemArray()[i].getInWhichOrders());
             }
