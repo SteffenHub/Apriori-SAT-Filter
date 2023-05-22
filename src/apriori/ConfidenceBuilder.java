@@ -20,7 +20,11 @@ public class ConfidenceBuilder {
     }
 
     public Conclusion[] run(){
+        int count = 0;
+        int maxCount = this.allConclusions.length;
         for (Conclusion conclusion : this.allConclusions) {
+            ++count;
+            System.out.println("Find Confidence " + count + "/" + maxCount);
             conclusion.setConfidence(conclusion.getSupport()/this.orders.getSupport(conclusion.getCondition(),this.saveMoreInterimResults));
         }
         List<Conclusion> conclusionsFilteredByMinConf = new ArrayList<>();

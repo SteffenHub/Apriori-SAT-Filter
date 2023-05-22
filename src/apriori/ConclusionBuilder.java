@@ -18,7 +18,11 @@ public class ConclusionBuilder {
 
     public Conclusion[] run() {
         List<Conclusion> allConclusions = new ArrayList<>();
+        int count = 0;
+        int maxCount = this.allPossibleCombinations.keySet().size();
         for (ItemSet itemSet : this.allPossibleCombinations.keySet()) {
+            ++count;
+            System.out.println("Build Conclusions " + count + "/" + maxCount);
             allConclusions.addAll(Arrays.asList(this.getPossibleConclusions(itemSet, this.allPossibleCombinations.get(itemSet))));
         }
         return allConclusions.toArray(new Conclusion[0]);
