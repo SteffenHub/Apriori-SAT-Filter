@@ -1,6 +1,7 @@
 package apriori;
 
 import Order.Orders;
+import args.ArgsInput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +10,12 @@ public class ConfidenceBuilder {
 
     private final Conclusion[] allConclusions;
     private final Orders orders;
-    private final boolean saveMoreInterimResults;
-    private final double minConfidence;
+    private final ArgsInput argsInput;
 
-    public ConfidenceBuilder(Conclusion[] allConclusions, Orders orders, double minConfidence, boolean saveMoreInterimResults){
+    public ConfidenceBuilder(Conclusion[] allConclusions, Orders orders, ArgsInput argsInput){
         this.allConclusions = allConclusions;
         this.orders = orders;
-        this.saveMoreInterimResults = saveMoreInterimResults;
-        this.minConfidence = minConfidence;
+        this.argsInput = argsInput;
     }
 
     public Conclusion[] run(){
@@ -25,11 +24,11 @@ public class ConfidenceBuilder {
         for (Conclusion conclusion : this.allConclusions) {
             ++count;
             System.out.println("Find Confidence " + count + "/" + maxCount);
-            conclusion.setConfidence(conclusion.getSupport()/this.orders.getSupport(conclusion.getCondition(),this.saveMoreInterimResults));
+            conclusion.setConfidence(conclusion.getSupport()/this.orders.getSupport(conclusion.getCondition(),this.argsInput.getCaching()));
         }
         List<Conclusion> conclusionsFilteredByMinConf = new ArrayList<>();
         for (Conclusion conclusion : this.allConclusions) {
-            if (conclusion.getConfidence() >= this.minConfidence){
+            if (conclusion.getConfidence() >= this.argsInput.getMinConfidence()){
                 conclusionsFilteredByMinConf.add(conclusion);
             }
         }

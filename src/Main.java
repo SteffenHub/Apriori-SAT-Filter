@@ -3,7 +3,8 @@ import apriori.Apriori;
 import apriori.Conclusion;
 import apriori.ConclusionBuilder;
 import apriori.ConfidenceBuilder;
-import item.Item;
+import args.ArgsInput;
+import args.ReadArgsException;
 import item.ItemSet;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
@@ -18,33 +19,11 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, ContradictionException, TimeoutException {
-
-        boolean saveMoreInterimResults = false;
-        double minSupport = Double.NaN;
-        double minConfidence = Double.NaN;
-        int depth = -1;
+    public static void main(String[] args) throws IOException, ContradictionException, TimeoutException, ReadArgsException {
 
         //read args
-        for (int i = 0; i < args.length; i++) {
-            String arg = args[i];
-            if (arg.equals("--minSupport")){
-                minSupport = Double.parseDouble(args[i+1]);
-            }
-            if (arg.equals("--minConfidence")){
-                minConfidence = Double.parseDouble(args[i+1]);
-            }
-            if (arg.equals("--caching")){
-                saveMoreInterimResults = args[i + 1].equals("true");
-            }
-            if (arg.equals("--depth")){
-                depth = Integer.parseInt(args[i+1]);
-            }
-        }
-        if (Double.isNaN(minSupport) || Double.isNaN(minConfidence) || depth == -1){
-            System.out.println("Not enough parameters passed");
-            return;
-        }
+        ArgsInput argsInput = new ArgsInput(args);
+
         Instant start = Instant.now();
 
         List<int[]> regelWerk = TxtConverter.stringListToListOfIntArrays(TxtReaderWriter.getTxtFromSamePath("rules.txt"));
@@ -54,7 +33,7 @@ public class Main {
         boolean[][] ordersBool = TxtConverter.listOfStringOrdersToBooleanArray(readOrders);
 
         Orders orders = new Orders(ordersBool);
-        Apriori apriori = new Apriori(satSolver, orders, depth, minSupport, saveMoreInterimResults);
+        Apriori apriori = new Apriori(satSolver, orders, argsInput);
         HashMap<ItemSet, Double> allPossibleKombinationFiltered = apriori.run();
 
 
@@ -66,7 +45,7 @@ public class Main {
         TxtReaderWriter.writeListOfStrings("allPossibleKombinationFiltered.txt", allPossibleKombinationFilteredString);
 
         Conclusion[] allConclusions = new ConclusionBuilder(allPossibleKombinationFiltered).run();
-        allConclusions = new ConfidenceBuilder(allConclusions, orders, minConfidence, saveMoreInterimResults).run();
+        allConclusions = new ConfidenceBuilder(allConclusions, orders, argsInput).run();
 
         //save to directory
         List<String> allConclusionsString = new ArrayList<>();

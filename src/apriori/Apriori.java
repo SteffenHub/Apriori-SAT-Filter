@@ -1,6 +1,7 @@
 package apriori;
 
 import Order.Orders;
+import args.ArgsInput;
 import item.Item;
 import item.ItemSet;
 import org.sat4j.specs.TimeoutException;
@@ -11,19 +12,14 @@ import java.util.*;
 
 public class Apriori {
 
-    private final double minSupport;
     private final SatSolver satSolver;
     private final Orders orders;
-    private final int toWhichDepth;
+    private final ArgsInput argsInput;
 
-    private final boolean saveMoreInterimResults;
-
-    public Apriori(SatSolver satSolver, Orders orders, int toWhichDepth, double minSupport, boolean saveMoreInterimResults) {
+    public Apriori(SatSolver satSolver, Orders orders, ArgsInput argsInput) {
         this.satSolver = satSolver;
         this.orders = orders;
-        this.toWhichDepth = toWhichDepth;
-        this.minSupport = minSupport;
-        this.saveMoreInterimResults = saveMoreInterimResults;
+        this.argsInput = argsInput;
     }
 
     public HashMap<ItemSet, Double> run() throws TimeoutException {
@@ -45,7 +41,7 @@ public class Apriori {
         currentSet.put(new ItemSet(new Item[]{}), 0.0);
 
         int depth = 1;
-        while (depth <= toWhichDepth) {
+        while (depth <= this.argsInput.getDepth()) {
             //The items that will be considered in this run
             Item[] stillPossibleItemArray = stillPossibleItems.toArray(new Item[0]);
 
@@ -60,10 +56,10 @@ public class Apriori {
                 //add all possible Items to this one
                 for (Item item : stillPossibleItemArray) {
                     ++counter;
-                    System.out.println(depth + "/" + toWhichDepth + " : " + counter + "/" + stillPossibleItemArray.length * keyList.size());
+                    System.out.println(depth + "/" + this.argsInput.getDepth() + " : " + counter + "/" + stillPossibleItemArray.length * keyList.size());
 
                     ItemSet union;
-                    if (this.saveMoreInterimResults) {
+                    if (this.argsInput.getCaching()) {
                         union = new ItemSet(itemSet, item);
                     }else{
                         union = itemSet.union(new ItemSet(new Item[]{item}));
@@ -86,9 +82,9 @@ public class Apriori {
                         }
                     }
 
-                    double support = this.orders.getSupport(union, saveMoreInterimResults);
+                    double support = this.orders.getSupport(union, this.argsInput.getCaching());
 
-                    if (support >= minSupport) {
+                    if (support >= this.argsInput.getMinSupport()) {
                         currentSet.put(union, support);
                         result.put(union, support);
                         print(union, support);
