@@ -1,7 +1,5 @@
 package item;
 
-import Order.Orders;
-
 /**
  * Class to Store one Item, which is represented by an integer
  */
@@ -15,7 +13,9 @@ public class Item {
     /**
      * The Orders where this item is selected
      */
-    private Orders iAmInThisOrders;
+    private boolean[] inWhichOrders;
+
+    private int inHowManyOrders;
 
     /**
      * Constructor for an Item.
@@ -25,7 +25,8 @@ public class Item {
      */
     public Item(int itemNumber) {
         this.itemNumber = itemNumber;
-        this.iAmInThisOrders = null;
+        this.inWhichOrders = null;
+        this.inHowManyOrders = -1;
     }
 
     /**
@@ -42,8 +43,8 @@ public class Item {
      *
      * @return the Orders where this Item is selected. Null if you haven't searched for them yet
      */
-    public Orders getInWhichOrders() {
-        return this.iAmInThisOrders;
+    public boolean[] getInWhichOrders() {
+        return this.inWhichOrders;
     }
 
     /**
@@ -51,7 +52,15 @@ public class Item {
      *
      * @param orders the Orders where this Item is selected
      */
-    public void setInWhichOrders(Orders orders){
-        this.iAmInThisOrders = orders;
+    public void setInWhichOrders(boolean[] orders){
+        this.inWhichOrders = orders;
+        this.inHowManyOrders = 0;
+        for (boolean order : orders)
+            if (order)
+                ++this.inHowManyOrders;
+    }
+
+    public int getInHowManyOrders() {
+        return inHowManyOrders;
     }
 }

@@ -3,9 +3,6 @@ package Order;
 import item.Item;
 import item.ItemSet;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Orders {
 
     private final Order[] orders;
@@ -32,72 +29,60 @@ public class Orders {
             }
         }
 
-        Orders intersection;
+        boolean[] intersection;
         if (itemSet.getPreviousItemSet() != null && itemSet.getPreviousItemSet().getInWhichOrders() != null && itemSet.getNewItem() != null) {
-            if (itemSet.getPreviousItemSet().getInWhichOrders().getOrders().length < itemSet.getNewItem().getInWhichOrders().getOrders().length) {
-                intersection = itemSet.getPreviousItemSet().getInWhichOrders().intersection(itemSet.getNewItem().getInWhichOrders());
+            if (itemSet.getPreviousItemSet().getInHowManyOrders() < itemSet.getNewItem().getInHowManyOrders()) {
+                intersection = this.intersection(itemSet.getPreviousItemSet().getInWhichOrders(), itemSet.getNewItem().getInWhichOrders()) ;
             }else{
-                intersection = itemSet.getNewItem().getInWhichOrders().intersection(itemSet.getPreviousItemSet().getInWhichOrders());
+                intersection = this.intersection(itemSet.getNewItem().getInWhichOrders(), itemSet.getPreviousItemSet().getInWhichOrders());
             }
         }else{
             intersection = itemSet.getItemArray()[0].getInWhichOrders();
             int smallestOrderArrayIn = 0;
             for (int i = 0; i < itemSet.getItemArray().length; i++) {
-                if (itemSet.getItemArray()[i].getInWhichOrders().getOrders().length < intersection.getOrders().length){
+                if (itemSet.getItemArray()[i].getInHowManyOrders() < itemSet.getItemArray()[smallestOrderArrayIn].getInHowManyOrders()){
                     intersection = itemSet.getItemArray()[i].getInWhichOrders();
                     smallestOrderArrayIn = i;
                 }
             }
             for (int i = 0; i < itemSet.getItemArray().length; i++) {
                 if (i == smallestOrderArrayIn) continue;
-                intersection = intersection.intersection(itemSet.getItemArray()[i].getInWhichOrders());
+                intersection = this.intersection(intersection, itemSet.getItemArray()[i].getInWhichOrders());
             }
         }
         if (saveMoreInterimResults) {
             itemSet.setInWhichOrders(intersection);
         }
-        return (double) intersection.getOrders().length / this.orders.length;
+        int countInHowManyOrders = 0;
+        for (boolean order : intersection)
+            if (order)
+                ++countInHowManyOrders;
+        return (double) countInHowManyOrders/ this.orders.length;
     }
 
-    public Orders getWhichOrders(Item item){
-        List<Order> isHere = new ArrayList<>();
+    public boolean[] getWhichOrders(Item item){
+        boolean[] isHereBool = new boolean[this.orders.length];
         for (Order order : this.orders) {
             if (order.isIn(item)){
-                isHere.add(order);
+                isHereBool[order.getOrderNumber()-1] = true;
             }
         }
-        return new Orders(isHere.toArray(new Order[0]));
+        return isHereBool;
     }
 
     /**
      * Forms the intersection of two orders.
      *
-     * @param orders the other orders
+     * @param orders1
+     * @param orders2
      * @return the intersection of this and the other orders
      */
-    public Orders intersection(Orders orders) {
-        boolean[] foundIn = new boolean[this.getOrders().length];
-        int countFound = 0;
-        int i = 0;
-        int j = 0;
-        while (i < this.orders.length && j < orders.getOrders().length) {
-            if (this.orders[i].getOrderNumber() < orders.getOrders()[j].getOrderNumber()) {
-                i++;
-            } else if (this.orders[i].getOrderNumber() > orders.getOrders()[j].getOrderNumber()) {
-                j++;
-            } else {
-                foundIn[i] = true;
-                ++countFound;
-                i++;
-                j++;
-            }
-        }
-        Order[] result = new Order[countFound];
-        int count = 0;
-        for (int k = 0; k < foundIn.length; k++)
-            if (foundIn[k])
-                result[count++] = this.getOrders()[k];
-        return new Orders(result);
+    public boolean[] intersection(boolean[] orders1, boolean[] orders2) {
+        boolean[] result = new boolean[orders1.length];
+        for (int i = 0; i < orders1.length; i++)
+            if (orders1[i] && orders2[i])
+                result[i] = true;
+        return result;
     }
 
     public Order[] getOrders(){

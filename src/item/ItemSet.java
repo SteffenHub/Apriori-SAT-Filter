@@ -20,7 +20,9 @@ public class ItemSet {
     /**
      * In which Orders all Items are selected.
      */
-    private Orders inWhichOrders;
+    private boolean[] inWhichOrders;
+
+    private int inHowManyOrders;
 
     /**
      * The previous ItemSet, so this ItemSet is build with the previous ItemSet and the newItem.
@@ -43,6 +45,7 @@ public class ItemSet {
         this.inWhichOrders = null;
         this.previousItemSet = null;
         this.newItem = null;
+        this.inHowManyOrders = -1;
     }
 
     /**
@@ -63,6 +66,7 @@ public class ItemSet {
 
         this.sortItemArray(this.itemArray);
         this.inWhichOrders = null;
+        this.inHowManyOrders = -1;
     }
 
     /**
@@ -70,16 +74,24 @@ public class ItemSet {
      *
      * @return In which Orders all Items are selected
      */
-    public Orders getInWhichOrders(){
+    public boolean[] getInWhichOrders(){
         return this.inWhichOrders;
     }
 
     /**
      * setter for in which Orders all Items are selected
-     * @param inWhichOrders In which Orders all Items are selected
+     * @param orders In which Orders all Items are selected
      */
-    public void setInWhichOrders(Orders inWhichOrders){
-        this.inWhichOrders = inWhichOrders;
+    public void setInWhichOrders(boolean[] orders){
+        this.inWhichOrders = orders;
+        this.inHowManyOrders = 0;
+        for (boolean order : orders)
+            if (order)
+                ++this.inHowManyOrders;
+    }
+
+    public int getInHowManyOrders() {
+        return inHowManyOrders;
     }
 
     /**
