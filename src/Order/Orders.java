@@ -76,7 +76,8 @@ public class Orders {
      * @return the intersection of this and the other orders
      */
     public Orders intersection(Orders orders) {
-        List<Order> result = new ArrayList<>();
+        boolean[] foundIn = new boolean[this.getOrders().length];
+        int countFound = 0;
         int i = 0;
         int j = 0;
         while (i < this.orders.length && j < orders.getOrders().length) {
@@ -85,12 +86,18 @@ public class Orders {
             } else if (this.orders[i].getOrderNumber() > orders.getOrders()[j].getOrderNumber()) {
                 j++;
             } else {
-                result.add(this.orders[i]);
+                foundIn[i] = true;
+                ++countFound;
                 i++;
                 j++;
             }
         }
-        return new Orders(result.toArray(new Order[0]));
+        Order[] result = new Order[countFound];
+        int count = 0;
+        for (int k = 0; k < foundIn.length; k++)
+            if (foundIn[k])
+                result[count++] = this.getOrders()[k];
+        return new Orders(result);
     }
 
     public Order[] getOrders(){
