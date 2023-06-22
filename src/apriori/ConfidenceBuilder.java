@@ -1,6 +1,6 @@
 package apriori;
 
-import Order.Orders;
+import order.Orders;
 import args.ArgsInput;
 
 import java.util.ArrayList;

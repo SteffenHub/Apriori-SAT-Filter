@@ -1,4 +1,4 @@
-import Order.Orders;
+import order.Orders;
 import apriori.Apriori;
 import apriori.Conclusion;
 import apriori.ConclusionBuilder;

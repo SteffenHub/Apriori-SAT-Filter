@@ -1,4 +1,4 @@
-package Order;
+package order;
 
 import item.Item;
 import item.ItemSet;
@@ -55,12 +55,20 @@ public class Orders {
         return isHereBool;
     }
 
+
     /**
-     * Forms the intersection of two orders.
+     * Computes the intersection of two boolean arrays.
+     * <p>
+     * The intersection is computed by comparing the elements at the same index
+     * in each array, and setting the result at that index to true if and only if
+     * the elements in both arrays are true. If the element in either array is false,
+     * the corresponding element in the result array will be false.
+     * <p>
+     * Note: This method assumes that both input arrays have the same length.
      *
-     * @param orders1
-     * @param orders2
-     * @return the intersection of this and the other orders
+     * @param orders1 the first boolean array
+     * @param orders2 the second boolean array
+     * @return a new boolean array representing the intersection of the input arrays
      */
     public boolean[] intersection(boolean[] orders1, boolean[] orders2) {
         boolean[] result = new boolean[orders1.length];

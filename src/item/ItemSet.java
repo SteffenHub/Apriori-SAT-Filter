@@ -113,13 +113,13 @@ public class ItemSet {
 
     @Override
     public String toString(){
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (int i = 0; i < this.getItemArray().length; i++) {
-            output += this.getItemArray()[i].getItemNumber();
+            output.append(this.getItemArray()[i].getItemNumber());
             if (i != this.getItemArray().length -1){
-                output += " ";
+                output.append(" ");
             }
         }
-        return output;
+        return output.toString();
     }
 }

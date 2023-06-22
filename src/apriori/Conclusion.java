@@ -85,23 +85,23 @@ public class Conclusion {
      */
     @Override
     public String toString() {
-        String output = "[";
+        StringBuilder output = new StringBuilder("[");
         for (int i = 0; i < this.condition.getItemArray().length; i++) {
-            output += this.condition.getItemArray()[i].getItemNumber();
+            output.append(this.condition.getItemArray()[i].getItemNumber());
             if (i != this.condition.getItemArray().length - 1) {
-                output += ",";
+                output.append(",");
             }
         }
-        output += " -> ";
+        output.append(" -> ");
         for (int i = 0; i < this.consequence.getItemArray().length; i++) {
-            output += this.consequence.getItemArray()[i].getItemNumber();
+            output.append(this.consequence.getItemArray()[i].getItemNumber());
             if (i != this.consequence.getItemArray().length - 1) {
-                output += ",";
+                output.append(",");
             }
         }
-        output += "] ";
-        output += "support: " + this.support + " ";
-        output += "confidence: " + this.confidence;
-        return output;
+        output.append("] ");
+        output.append("support: ").append(this.support).append(" ");
+        output.append("confidence: ").append(this.confidence);
+        return output.toString();
     }
 }
