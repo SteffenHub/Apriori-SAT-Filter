@@ -10,61 +10,46 @@ public class Orders {
     public Orders(boolean[][] ordersBool) {
         this.orders = new Order[ordersBool.length];
         for (int i = 0; i < ordersBool.length; i++) {
-            orders[i] = new Order(ordersBool[i], i+1);
+            orders[i] = new Order(ordersBool[i], i + 1);
         }
     }
 
-    public Orders(Order[] orders){
-        this.orders = orders;
-    }
-
-    public double getSupport(ItemSet itemSet, boolean saveMoreInterimResults) {
+    public double getSupport(ItemSet itemSet) {
 
         if (itemSet.getItemArray().length == 0) return 0.0;
 
         //check if all inWhichOrders is correct else search them
         for (Item item : itemSet.getItemArray()) {
-            if (item.getInWhichOrders() == null){
+            if (item.getInWhichOrders() == null) {
                 item.setInWhichOrders(this.getWhichOrders(item));
             }
         }
 
-        boolean[] intersection;
-        if (itemSet.getPreviousItemSet() != null && itemSet.getPreviousItemSet().getInWhichOrders() != null && itemSet.getNewItem() != null) {
-            if (itemSet.getPreviousItemSet().getInHowManyOrders() < itemSet.getNewItem().getInHowManyOrders()) {
-                intersection = this.intersection(itemSet.getPreviousItemSet().getInWhichOrders(), itemSet.getNewItem().getInWhichOrders()) ;
-            }else{
-                intersection = this.intersection(itemSet.getNewItem().getInWhichOrders(), itemSet.getPreviousItemSet().getInWhichOrders());
-            }
-        }else{
-            intersection = itemSet.getItemArray()[0].getInWhichOrders();
-            int smallestOrderArrayIn = 0;
-            for (int i = 0; i < itemSet.getItemArray().length; i++) {
-                if (itemSet.getItemArray()[i].getInHowManyOrders() < itemSet.getItemArray()[smallestOrderArrayIn].getInHowManyOrders()){
-                    intersection = itemSet.getItemArray()[i].getInWhichOrders();
-                    smallestOrderArrayIn = i;
-                }
-            }
-            for (int i = 0; i < itemSet.getItemArray().length; i++) {
-                if (i == smallestOrderArrayIn) continue;
-                intersection = this.intersection(intersection, itemSet.getItemArray()[i].getInWhichOrders());
+        boolean[] intersection = itemSet.getItemArray()[0].getInWhichOrders();
+        int smallestOrderArrayIn = 0;
+        for (int i = 0; i < itemSet.getItemArray().length; i++) {
+            if (itemSet.getItemArray()[i].getInHowManyOrders() < itemSet.getItemArray()[smallestOrderArrayIn].getInHowManyOrders()) {
+                intersection = itemSet.getItemArray()[i].getInWhichOrders();
+                smallestOrderArrayIn = i;
             }
         }
-        if (saveMoreInterimResults) {
-            itemSet.setInWhichOrders(intersection);
+        for (int i = 0; i < itemSet.getItemArray().length; i++) {
+            if (i == smallestOrderArrayIn) continue;
+            intersection = this.intersection(intersection, itemSet.getItemArray()[i].getInWhichOrders());
         }
+
         int countInHowManyOrders = 0;
         for (boolean order : intersection)
             if (order)
                 ++countInHowManyOrders;
-        return (double) countInHowManyOrders/ this.orders.length;
+        return (double) countInHowManyOrders / this.orders.length;
     }
 
-    public boolean[] getWhichOrders(Item item){
+    public boolean[] getWhichOrders(Item item) {
         boolean[] isHereBool = new boolean[this.orders.length];
         for (Order order : this.orders) {
-            if (order.isIn(item)){
-                isHereBool[order.getOrderNumber()-1] = true;
+            if (order.isIn(item)) {
+                isHereBool[order.getOrderNumber() - 1] = true;
             }
         }
         return isHereBool;
@@ -85,7 +70,7 @@ public class Orders {
         return result;
     }
 
-    public Order[] getOrders(){
+    public Order[] getOrders() {
         return this.orders;
     }
 }

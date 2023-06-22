@@ -58,12 +58,7 @@ public class Apriori {
                     ++counter;
                     System.out.println(depth + "/" + this.argsInput.getDepth() + " : " + counter + "/" + stillPossibleItemArray.length * keyList.size());
 
-                    ItemSet union;
-                    if (this.argsInput.getCaching()) {
-                        union = new ItemSet(itemSet, item);
-                    }else{
-                        union = itemSet.union(new ItemSet(new Item[]{item}));
-                    }
+                    ItemSet union = itemSet.union(new ItemSet(new Item[]{item}));
 
                     //check if this configuration was already reversed e.g. [0,1] and [1,0].
                     if (currentSet.containsKey(union)) {
@@ -82,7 +77,7 @@ public class Apriori {
                         }
                     }
 
-                    double support = this.orders.getSupport(union, this.argsInput.getCaching());
+                    double support = this.orders.getSupport(union);
 
                     if (support >= this.argsInput.getMinSupport()) {
                         currentSet.put(union, support);

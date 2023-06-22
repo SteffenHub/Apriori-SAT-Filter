@@ -7,13 +7,11 @@ public class ArgsInput {
     private double minSupport;
     private double minConfidence;
     private int depth;
-    private boolean caching;
 
     public ArgsInput(String[] args) throws ReadArgsException {
         this.minSupport = Double.NaN;
         this.minConfidence = Double.NaN;
         this.depth = -1;
-        this.caching = false;
         this.readArgs(args);
     }
 
@@ -25,9 +23,6 @@ public class ArgsInput {
             }
             if (arg.equals("--minConfidence")){
                 this.minConfidence = Double.parseDouble(args[i+1]);
-            }
-            if (arg.equals("--caching")){
-                this.caching = args[i + 1].equals("true");
             }
             if (arg.equals("--depth")){
                 this.depth = Integer.parseInt(args[i+1]);
@@ -48,9 +43,5 @@ public class ArgsInput {
 
     public int getDepth() {
         return depth;
-    }
-
-    public boolean getCaching() {
-        return caching;
     }
 }

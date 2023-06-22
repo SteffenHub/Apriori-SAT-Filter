@@ -1,7 +1,5 @@
 package item;
 
-import Order.Orders;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -18,23 +16,6 @@ public class ItemSet {
     private final Item[] itemArray;
 
     /**
-     * In which Orders all Items are selected.
-     */
-    private boolean[] inWhichOrders;
-
-    private int inHowManyOrders;
-
-    /**
-     * The previous ItemSet, so this ItemSet is build with the previous ItemSet and the newItem.
-     */
-    private final ItemSet previousItemSet;
-
-    /**
-     * the new Item, so this ItemSet is build with the previous ItemSet and the newItem.
-     */
-    private final Item newItem;
-
-    /**
      * Constructor for an ItemSet.
      * the given Array will be stored sorted.
      * @param itemArray the ItemSet-Array.
@@ -42,56 +23,6 @@ public class ItemSet {
     public ItemSet(Item[] itemArray) {
         this.itemArray = itemArray;
         this.sortItemArray(this.itemArray);
-        this.inWhichOrders = null;
-        this.previousItemSet = null;
-        this.newItem = null;
-        this.inHowManyOrders = -1;
-    }
-
-    /**
-     * A Constructor to use previousItemSet and newItem.
-     * This ItemSet is build with the previous ItemSet and the newItem.
-     *
-     * @param previousItemSet The previous ItemSet, so this ItemSet is build with the previous ItemSet and the newItem.
-     * @param newItem the new Item, so this ItemSet is build with the previous ItemSet and the newItem.
-     */
-    public ItemSet(ItemSet previousItemSet, Item newItem) {
-        this.previousItemSet = previousItemSet;
-        this.newItem = newItem;
-
-        //create new itemArray by adding the new Item to the previous itemSet
-        this.itemArray = new Item[previousItemSet.getItemArray().length + 1];
-        System.arraycopy(previousItemSet.getItemArray(), 0, this.itemArray, 0, previousItemSet.getItemArray().length);
-        this.itemArray[previousItemSet.getItemArray().length] = newItem;
-
-        this.sortItemArray(this.itemArray);
-        this.inWhichOrders = null;
-        this.inHowManyOrders = -1;
-    }
-
-    /**
-     * getter for in which Orders all Items are selected.
-     *
-     * @return In which Orders all Items are selected
-     */
-    public boolean[] getInWhichOrders(){
-        return this.inWhichOrders;
-    }
-
-    /**
-     * setter for in which Orders all Items are selected
-     * @param orders In which Orders all Items are selected
-     */
-    public void setInWhichOrders(boolean[] orders){
-        this.inWhichOrders = orders;
-        this.inHowManyOrders = 0;
-        for (boolean order : orders)
-            if (order)
-                ++this.inHowManyOrders;
-    }
-
-    public int getInHowManyOrders() {
-        return inHowManyOrders;
     }
 
     /**
@@ -178,14 +109,6 @@ public class ItemSet {
             }
         }
         return false;
-    }
-
-    public ItemSet getPreviousItemSet() {
-        return previousItemSet;
-    }
-
-    public Item getNewItem() {
-        return newItem;
     }
 
     @Override
