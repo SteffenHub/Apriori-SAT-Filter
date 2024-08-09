@@ -6,20 +6,24 @@ import java.util.List;
 public class TxtConverter {
 
     public static boolean[][] listOfStringOrdersToBooleanArray(List<String> ordersStringList) {
+        ordersStringList.removeIf(line -> line.charAt(0) == 'c');
         boolean[][] ordersBool = new boolean[ordersStringList.size()][ordersStringList.get(0).split(",").length];
+        int firstOrderSize = ordersStringList.getFirst().length();
         for (int i = 0; i < ordersStringList.size(); i++) {
-            String[] split = ordersStringList.get(i).split(",");
-            boolean[] order = new boolean[split.length];
-            for (int j = 0; j < split.length; j++) {
-                if (split[j].equals("0")) {
+            boolean[] order = new boolean[ordersStringList.get(i).length()];
+            for (int j = 0; j < order.length; j++) {
+                if (ordersStringList.get(i).charAt(j) == '0') {
                     order[j] = false;
-                } else if (split[j].equals("1")) {
+                } else if (ordersStringList.get(i).charAt(j) == '1') {
                     order[j] = true;
                 } else {
                     throw new Error("The Orders can't be read. Found an entry that don't match '0' or '1'");
                 }
             }
             ordersBool[i] = order;
+            if (firstOrderSize != order.length){
+                throw new Error("Orders have different sizes: " + order.length + " and " + firstOrderSize);
+            }
         }
         return ordersBool;
     }
@@ -35,6 +39,7 @@ public class TxtConverter {
      */
     public static List<int[]> stringListToListOfIntArrays(List<String> cnfStr) {
         ArrayList<int[]> cnfArr = new ArrayList<>();
+        cnfStr.removeIf(line -> line.charAt(0) == 'c');
         int start = 0;
         // If the first line still contains the cnf description
         if (cnfStr.get(0).charAt(0) == 'p') {
