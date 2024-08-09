@@ -26,10 +26,10 @@ public class Main {
 
         Instant start = Instant.now();
 
-        List<int[]> regelWerk = TxtConverter.stringListToListOfIntArrays(TxtReaderWriter.getTxtFromSamePath("rules.txt"));
+        List<int[]> regelWerk = TxtConverter.stringListToListOfIntArrays(TxtReaderWriter.getTxtFromSamePath(argsInput.getRuleFile()));
         SatSolver satSolver = new SatSolver(regelWerk.toArray(new int[0][]));
 
-        List<String> readOrders = TxtReaderWriter.getTxtFromSamePath("orders.txt");
+        List<String> readOrders = TxtReaderWriter.getTxtFromSamePath(argsInput.getOrderFile());
         boolean[][] ordersBool = TxtConverter.listOfStringOrdersToBooleanArray(readOrders);
 
         Orders orders = new Orders(ordersBool);
