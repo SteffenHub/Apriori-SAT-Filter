@@ -60,7 +60,19 @@ public class ArgsInput {
         return ruleFile;
     }
 
+    public String getRuleFileWithoutPath(){
+        int lastSlash = this.ruleFile.lastIndexOf('/');
+        int lastPoint = this.ruleFile.lastIndexOf('.');
+        return this.ruleFile.substring(lastSlash + 1, lastPoint);
+    }
+
     public String getOrderFile() {
         return orderFile;
+    }
+
+    public String getOderFileWithoutPath(){
+        int lastSlash = this.orderFile.lastIndexOf('/');
+        int lastPoint = this.orderFile.lastIndexOf('.');
+        return this.orderFile.substring(lastSlash + 1, lastPoint);
     }
 }

@@ -23,6 +23,7 @@ public class ConclusionBuilder {
         for (ItemSet itemSet : this.allPossibleCombinations.keySet()) {
             ++count;
             System.out.println("Build Conclusions " + count + "/" + maxCount);
+            System.out.println(itemSet);
             allConclusions.addAll(Arrays.asList(this.getPossibleConclusions(itemSet, this.allPossibleCombinations.get(itemSet))));
         }
         return allConclusions.toArray(new Conclusion[0]);

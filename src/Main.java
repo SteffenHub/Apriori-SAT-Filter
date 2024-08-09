@@ -42,7 +42,13 @@ public class Main {
         for (ItemSet kombi: allPossibleKombinationFiltered.keySet()) {
             allPossibleKombinationFilteredString.add(kombi + " " + allPossibleKombinationFiltered.get(kombi));
         }
-        TxtReaderWriter.writeListOfStrings("allPossibleKombinationFiltered.txt", allPossibleKombinationFilteredString);
+        TxtReaderWriter.writeListOfStrings("allPossibleCombination_Apriori_"
+                        + argsInput.getRuleFileWithoutPath() + "_"
+                        + argsInput.getOderFileWithoutPath() + "_"
+                        + argsInput.getMinSupport() + "_"
+                        + argsInput.getMinConfidence() + "_"
+                        + argsInput.getDepth()
+                        + ".txt", allPossibleKombinationFilteredString);
 
         Conclusion[] allConclusions = new ConclusionBuilder(allPossibleKombinationFiltered).run();
         allConclusions = new ConfidenceBuilder(allConclusions, orders, argsInput).run();
@@ -52,7 +58,13 @@ public class Main {
         for (Conclusion conclusion : allConclusions) {
             allConclusionsString.add(conclusion.toString());
         }
-        TxtReaderWriter.writeListOfStrings("result.txt", allConclusionsString);
+        TxtReaderWriter.writeListOfStrings("result_apriori_"
+                        + argsInput.getRuleFileWithoutPath() + "_"
+                        + argsInput.getOderFileWithoutPath() + "_"
+                        + argsInput.getMinSupport() + "_"
+                        + argsInput.getMinConfidence() + "_"
+                        + argsInput.getDepth()
+                        + ".txt", allConclusionsString);
 
         Instant end = Instant.now();
         Duration interval = Duration.between(start, end);
