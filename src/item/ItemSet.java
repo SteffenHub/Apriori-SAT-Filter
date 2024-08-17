@@ -15,6 +15,8 @@ public class ItemSet {
      */
     private final Item[] itemArray;
 
+    private double support;
+
     /**
      * Constructor for an ItemSet.
      * the given Array will be stored sorted.
@@ -23,6 +25,7 @@ public class ItemSet {
     public ItemSet(Item[] itemArray) {
         this.itemArray = itemArray;
         this.sortItemArray(this.itemArray);
+        this.support = Double.NaN;
     }
 
     /**
@@ -118,6 +121,13 @@ public class ItemSet {
         return false;
     }
 
+    public void setSupport(double support){
+        this.support = support;
+    }
+
+    public double getSupport(){
+        return this.support;
+    }
     /**
      * Returns a string representation of this ItemSet.
      *
