@@ -5,6 +5,7 @@ import order.Orders;
 import args.ArgsInput;
 import item.Item;
 import item.ItemSet;
+import order.WrongIndexForItemException;
 import org.sat4j.specs.TimeoutException;
 import satSolver.SatSolver;
 import satSolver.SolverUsages;
@@ -23,7 +24,7 @@ public class Apriori {
         this.argsInput = argsInput;
     }
 
-    public HashMap<ItemSet, Double> run() throws TimeoutException, DifferentOrderSIzeException {
+    public HashMap<ItemSet, Double> run() throws TimeoutException, DifferentOrderSIzeException, WrongIndexForItemException {
 
         HashMap<ItemSet, Double> result = new HashMap<>();
 

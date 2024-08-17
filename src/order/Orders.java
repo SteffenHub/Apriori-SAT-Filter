@@ -40,7 +40,7 @@ public class Orders {
      * @return The support value for the item set as a double.
      * @throws DifferentOrderSIzeException If the orders have different sizes.
      */
-    public double getSupport(ItemSet itemSet) throws DifferentOrderSIzeException {
+    public double getSupport(ItemSet itemSet) throws DifferentOrderSIzeException, WrongIndexForItemException {
 
         if (itemSet.getItemArray().length == 0) return 0.0;
 
@@ -78,7 +78,7 @@ public class Orders {
      * @param item The item to check.
      * @return A boolean array where each element represents whether an order contains the item.
      */
-    public boolean[] getWhichOrders(Item item) {
+    public boolean[] getWhichOrders(Item item) throws WrongIndexForItemException {
         boolean[] isHereBool = new boolean[this.orders.length];
         for (Order order : this.orders) {
             if (order.isIn(item)) {

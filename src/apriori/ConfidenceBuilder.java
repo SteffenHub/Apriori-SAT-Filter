@@ -3,6 +3,7 @@ package apriori;
 import order.DifferentOrderSIzeException;
 import order.Orders;
 import args.ArgsInput;
+import order.WrongIndexForItemException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class ConfidenceBuilder {
         this.argsInput = argsInput;
     }
 
-    public Conclusion[] run() throws DifferentOrderSIzeException {
+    public Conclusion[] run() throws DifferentOrderSIzeException, WrongIndexForItemException {
         int count = 0;
         int maxCount = this.allConclusions.length;
         for (Conclusion conclusion : this.allConclusions) {

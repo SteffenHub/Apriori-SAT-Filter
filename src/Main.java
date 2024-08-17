@@ -7,6 +7,7 @@ import apriori.ConfidenceBuilder;
 import args.ArgsInput;
 import args.ReadArgsException;
 import item.ItemSet;
+import order.WrongIndexForItemException;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.TimeoutException;
 import satSolver.SatSolver;
@@ -20,7 +21,7 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, ContradictionException, TimeoutException, ReadArgsException, DifferentOrderSIzeException {
+    public static void main(String[] args) throws IOException, ContradictionException, TimeoutException, ReadArgsException, DifferentOrderSIzeException, WrongIndexForItemException {
 
         //read args
         ArgsInput argsInput = new ArgsInput(args);
