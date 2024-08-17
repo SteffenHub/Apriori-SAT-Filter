@@ -3,10 +3,22 @@ package order;
 import item.Item;
 import item.ItemSet;
 
+/**
+ * The Orders class is designed to manage a collection of all Order objects.
+ * This includes calculating their 'support value'.
+ */
 public class Orders {
 
+    /**
+     * Represents an array of Order objects.
+     */
     private final Order[] orders;
 
+    /**
+     * Represents a collection of orders.
+     *
+     * @param ordersBool The read orders
+     */
     public Orders(boolean[][] ordersBool) {
         this.orders = new Order[ordersBool.length];
         for (int i = 0; i < ordersBool.length; i++) {
@@ -14,6 +26,20 @@ public class Orders {
         }
     }
 
+    /**
+     * Returns the support value for the given item set.
+     * The support value is the ratio of the number of orders that contain all the items in the item set
+     * to the total number of orders in the system.
+     * The support value is calculated by saving the orders in which a variable is as a boolean array in the Item class.
+     * For example for a total of 5 orders: item1 is in [true, true, false, true, false] => support for item1 is 3/5
+     * if the itemSet has a length of 2 than the intersection of true values are build.
+     * if item2 is in [true, false, false, true, true] than both item1 and item2 are in the true intersection of item1 and item2:
+     * [true, false, false, true, false] => support for item1 and item2 is 2/5
+     *
+     * @param itemSet The item set for which to calculate the support value.
+     * @return The support value for the item set as a double.
+     * @throws DifferentOrderSIzeException If the orders have different sizes.
+     */
     public double getSupport(ItemSet itemSet) throws DifferentOrderSIzeException {
 
         if (itemSet.getItemArray().length == 0) return 0.0;
@@ -45,6 +71,13 @@ public class Orders {
         return (double) countInHowManyOrders / this.orders.length;
     }
 
+
+    /**
+     * Returns a boolean array indicating which orders contain the given item.
+     *
+     * @param item The item to check.
+     * @return A boolean array where each element represents whether an order contains the item.
+     */
     public boolean[] getWhichOrders(Item item) {
         boolean[] isHereBool = new boolean[this.orders.length];
         for (Order order : this.orders) {
@@ -81,6 +114,11 @@ public class Orders {
         return result;
     }
 
+    /**
+     * Getter for all orders
+     *
+     * @return The array of orders.
+     */
     public Order[] getOrders() {
         return this.orders;
     }
