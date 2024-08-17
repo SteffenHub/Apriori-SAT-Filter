@@ -32,10 +32,11 @@ public class Apriori {
         Set<Item> stillPossibleItems = new HashSet<>(Arrays.asList(items));
 
         //remove items that already have determined truth value
-        for (int determinedVar : SolverUsages.getDeterminedVars(satSolver)) {
-            stillPossibleItems.remove(items[Math.abs(determinedVar) - 1]);
+        if (argsInput.getUseSatSolver()) {
+            for (int determinedVar : SolverUsages.getDeterminedVars(satSolver)) {
+                stillPossibleItems.remove(items[Math.abs(determinedVar) - 1]);
+            }
         }
-
         //Here are the combinations that pass all filters
         HashMap<ItemSet, Double> currentSet = new HashMap<>();
         // Add empty itemSet for the first depth iteration
@@ -67,13 +68,19 @@ public class Apriori {
                     }
 
                     // if an Item is added to the configuration, which is already in this configuration e.g. [item1, item2] and item2 added
-                    // or this itemSet is not selectable
-                    if (union.getItemArray().length < depth || !satSolver.isSatisfiableWithConjunct(union.toIntArray())) {
+                    if (union.getItemArray().length < depth) {
                         continue;
                     }
 
-                    if (depth >= 2) {
-                        //you have to choose this?
+                    // If this itemSet is not selectable
+                    if (argsInput.getUseSatSolver()) {
+                        if (!satSolver.isSatisfiableWithConjunct(union.toIntArray())){
+                            continue;
+                        }
+                    }
+
+                    if (depth >= 2 && argsInput.getUseSatSolver()) {
+                        // Do you have to choose this?
                         if (!satSolver.isSatisfiableWithClause(Arrays.stream(union.toIntArray()).map(i -> -i).toArray())) {
                             continue;
                         }

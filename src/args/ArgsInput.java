@@ -7,6 +7,7 @@ public class ArgsInput {
     private double minSupport;
     private double minConfidence;
     private int depth;
+    private boolean useSatSolver;
 
     private String ruleFile;
     private String orderFile;
@@ -17,12 +18,16 @@ public class ArgsInput {
         this.depth = -1;
         this.ruleFile = "";
         this.orderFile = "";
+        this.useSatSolver = true;
         this.readArgs(args);
     }
 
     private void readArgs(String[] args) throws ReadArgsException {
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
+            if (arg.equals("--use-sat-solver")){
+                this.useSatSolver = Boolean.parseBoolean(args[i+1]);
+            }
             if (arg.equals("--rule-file")){
                 this.ruleFile = args[i+1];
             }
@@ -35,7 +40,7 @@ public class ArgsInput {
             if (arg.equals("--minConfidence")){
                 this.minConfidence = Double.parseDouble(args[i+1]);
             }
-            if (arg.equals("--depth")){
+            if (arg.equals("--max-depth")){
                 this.depth = Integer.parseInt(args[i+1]);
             }
         }
@@ -74,5 +79,9 @@ public class ArgsInput {
         int lastSlash = this.orderFile.lastIndexOf('/');
         int lastPoint = this.orderFile.lastIndexOf('.');
         return this.orderFile.substring(lastSlash + 1, lastPoint);
+    }
+
+    public boolean getUseSatSolver(){
+        return this.useSatSolver;
     }
 }
