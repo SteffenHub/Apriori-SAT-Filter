@@ -6,8 +6,9 @@ import java.util.List;
 public class TxtConverter {
 
     public static boolean[][] listOfStringOrdersToBooleanArray(List<String> ordersStringList) {
+        // remove comment lines starting with c
         ordersStringList.removeIf(line -> line.charAt(0) == 'c');
-        boolean[][] ordersBool = new boolean[ordersStringList.size()][ordersStringList.get(0).split(",").length];
+        boolean[][] ordersBool = new boolean[ordersStringList.size()][ordersStringList.getFirst().length()];
         int firstOrderSize = ordersStringList.getFirst().length();
         for (int i = 0; i < ordersStringList.size(); i++) {
             boolean[] order = new boolean[ordersStringList.get(i).length()];
@@ -59,5 +60,4 @@ public class TxtConverter {
         }
         return cnfArr;
     }
-
 }
