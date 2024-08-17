@@ -4,7 +4,6 @@ import order.Orders;
 import apriori.Apriori;
 import apriori.Conclusion;
 import apriori.ConclusionBuilder;
-import apriori.ConfidenceBuilder;
 import args.ArgsInput;
 import args.ReadArgsException;
 import item.ItemSet;
@@ -73,12 +72,11 @@ public class Main {
                         + ".txt", allPossibleCombinationFilteredString);
 
         // generate the conclusions with all the possible combinations found in Apriori process
-        Conclusion[] allConclusions = new ConclusionBuilder(allPossibleCombinationFiltered).run();
-        allConclusions = new ConfidenceBuilder(allConclusions, orders, argsInput).run();
+        Conclusion[] allFilteredConclusions = new ConclusionBuilder(allPossibleCombinationFiltered, orders, argsInput).run();
 
         //save to directory
         List<String> allConclusionsString = new ArrayList<>();
-        for (Conclusion conclusion : allConclusions) {
+        for (Conclusion conclusion : allFilteredConclusions) {
             allConclusionsString.add(conclusion.toString());
         }
         TxtReaderWriter.writeListOfStrings("result_apriori_"

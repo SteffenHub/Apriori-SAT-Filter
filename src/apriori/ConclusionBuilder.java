@@ -1,32 +1,44 @@
 package apriori;
 
+import args.ArgsInput;
 import item.Item;
 import item.ItemSet;
+import order.DifferentOrderSIzeException;
+import order.Orders;
+import order.WrongIndexForItemException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class ConclusionBuilder {
 
     private final HashMap<ItemSet, Double> allPossibleCombinations;
+    private final Orders orders;
+    private final ArgsInput argsInput;
 
-    public ConclusionBuilder(HashMap<ItemSet, Double> allPossibleCombinations) {
+    public ConclusionBuilder(HashMap<ItemSet, Double> allPossibleCombinations, Orders orders, ArgsInput argsInput) {
         this.allPossibleCombinations = allPossibleCombinations;
+        this.orders = orders;
+        this.argsInput = argsInput;
     }
 
-    public Conclusion[] run() {
-        List<Conclusion> allConclusions = new ArrayList<>();
+    public Conclusion[] run() throws WrongIndexForItemException, DifferentOrderSIzeException {
+        List<Conclusion> allPassedConclusions = new ArrayList<>();
         int count = 0;
         int maxCount = this.allPossibleCombinations.keySet().size();
         for (ItemSet itemSet : this.allPossibleCombinations.keySet()) {
             ++count;
-            System.out.println("Build Conclusions " + count + "/" + maxCount);
-            System.out.println(itemSet);
-            allConclusions.addAll(Arrays.asList(this.getPossibleConclusions(itemSet, this.allPossibleCombinations.get(itemSet))));
+            System.out.println("Build Conclusions " + count + "/" + maxCount + " for: " + itemSet);
+            for (Conclusion conclusion : this.getPossibleConclusions(itemSet,this.allPossibleCombinations.get(itemSet))){
+                conclusion.setConfidence(conclusion.getSupport()/this.orders.getSupport(conclusion.getCondition()));
+                if (conclusion.getConfidence() >= this.argsInput.getMinConfidence()){
+                    allPassedConclusions.add(conclusion);
+                    System.out.println("Found Conclusion which fulfills Confidence: " + conclusion);
+                }
+            }
         }
-        return allConclusions.toArray(new Conclusion[0]);
+        return allPassedConclusions.toArray(new Conclusion[0]);
     }
 
     public Conclusion[] getPossibleConclusions(ItemSet itemSet, double support) {
@@ -71,7 +83,6 @@ public class ConclusionBuilder {
                 subsets.add(subset);
             }
         }
-
         return subsets.toArray(new ItemSet[0]);
     }
 }

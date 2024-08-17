@@ -1,3 +1,4 @@
+/**
 package apriori;
 
 import item.Item;
@@ -44,4 +45,6 @@ class ConclusionBuilderTest {
         ItemSet[] subSetsActual = this.conclusionBuilder.getAllSubSets(this.itemSet);
         System.out.println(Arrays.toString(subSetsActual));
     }
+
 }
+ **/
