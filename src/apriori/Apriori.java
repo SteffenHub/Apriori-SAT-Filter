@@ -38,10 +38,11 @@ public class Apriori {
 
         //Here are the combinations that pass all filters
         HashMap<ItemSet, Double> currentSet = new HashMap<>();
+        // Add empty itemSet for the first depth iteration
         currentSet.put(new ItemSet(new Item[]{}), 0.0);
 
         int depth = 1;
-        while (depth <= this.argsInput.getDepth()) {
+        while (depth <= this.argsInput.getDepth() && !stillPossibleItems.isEmpty()) {
             //The items that will be considered in this run
             Item[] stillPossibleItemArray = stillPossibleItems.toArray(new Item[0]);
 
@@ -56,7 +57,7 @@ public class Apriori {
                 //add all possible Items to this one
                 for (Item item : stillPossibleItemArray) {
                     ++counter;
-                    System.out.println(depth + "/" + this.argsInput.getDepth() + " : " + counter + "/" + stillPossibleItemArray.length * keyList.size());
+                    System.out.println("Depth: " + depth + "/" + this.argsInput.getDepth() + " : " + "combinations to check: " + counter + "/" + stillPossibleItemArray.length * keyList.size());
 
                     ItemSet union = itemSet.union(new ItemSet(new Item[]{item}));
 
@@ -65,7 +66,8 @@ public class Apriori {
                         continue;
                     }
 
-                    //if a PR is added to the configuration, which is already in this configuration or is not selectable
+                    // if an Item is added to the configuration, which is already in this configuration e.g. [item1, item2] and item2 added
+                    // or this itemSet is not selectable
                     if (union.getItemArray().length < depth || !satSolver.isSatisfiableWithConjunct(union.toIntArray())) {
                         continue;
                     }
@@ -93,8 +95,9 @@ public class Apriori {
                 stillPossibleItems.addAll(Arrays.asList(prSet.getItemArray()));
             }
             ++depth;
-            System.out.println(currentSet.size());
-            System.out.println(stillPossibleItems.size());
+            System.out.println("Found new Candidates in this iteration: " + currentSet.size());
+            System.out.println("Candidates contain " + stillPossibleItems.size() + " different Items");
+            System.out.println();
         }
 
         return result;
@@ -109,6 +112,7 @@ public class Apriori {
     }
 
     private void print(ItemSet itemSet, double support) {
+        System.out.print("Found ItemSet which fulfills the min Support: ");
         int[] itemArray = itemSet.toIntArray();
         for (int i = 0; i < itemArray.length; i++) {
             System.out.print(itemSet.getItemArray()[i].getItemNumber());
