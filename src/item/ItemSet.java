@@ -26,9 +26,9 @@ public class ItemSet {
     }
 
     /**
-     * getter for the Item-Array.
+     * Getter for the Item-Array.
      *
-     * @return the Item-Array which represents the ItemSet.
+     * @return The Item-Array which represents the ItemSet.
      */
     public Item[] getItemArray() {
         return itemArray;
@@ -48,7 +48,7 @@ public class ItemSet {
     }
 
     /**
-     * default equals Method. This is used in Apriori in a Set to check if an ItemSet is already in a Set of ItemSets.
+     * Default equals Method. This is used in Apriori in a Set to check if an ItemSet is already in a Set of ItemSets.
      *
      * @param other the other ItemSet.
      * @return whether this ItemSet and the given ItemSet have stored the same Items.
@@ -102,6 +102,13 @@ public class ItemSet {
         return Arrays.deepHashCode(itemArray);
     }
 
+    /**
+     * Checks if the given Item is contained in the ItemSet.
+     * The comparison is made by using the items unique itemsNumbers
+     *
+     * @param item The Item to check for containment.
+     * @return true if the Item is contained in the ItemSet, false otherwise.
+     */
     public boolean contains(Item item){
         for (Item itemInArray: this.getItemArray()) {
             if (item.getItemNumber() == itemInArray.getItemNumber()){
@@ -111,6 +118,12 @@ public class ItemSet {
         return false;
     }
 
+    /**
+     * Returns a string representation of this ItemSet.
+     *
+     * @return The string representation of this ItemSet, which is formed by concatenating
+     *         the item numbers of each Item in the ItemSet separated by a space.
+     */
     @Override
     public String toString(){
         StringBuilder output = new StringBuilder();
