@@ -110,6 +110,12 @@ public class Apriori {
         return result;
     }
 
+    /**
+     * Creates an Array of Items if index starting by Item1, Item2, ...
+     *
+     * @param howManyItems How many Items exists
+     * @return An Array of 'howManyItems' as Array of Items
+     */
     private Item[] createItems(int howManyItems) {
         Item[] items = new Item[howManyItems];
         for (int i = 0; i < items.length; i++) {
@@ -118,6 +124,12 @@ public class Apriori {
         return items;
     }
 
+    /**
+     * Prints an ItemSet and his support to the console
+     *
+     * @param itemSet The ItemSet
+     * @param support The Support of this ItemSet
+     */
     private void print(ItemSet itemSet, double support) {
         System.out.print("Found ItemSet which fulfills the min Support: ");
         int[] itemArray = itemSet.toIntArray();
