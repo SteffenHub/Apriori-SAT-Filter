@@ -3,8 +3,24 @@ package txtImportExport;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Converts read text data into different formats.
+ */
 public class TxtConverter {
 
+    /**
+     * Converts a list of string orders to a boolean array.
+     * Removes comment lines starting with 'c' from the list.
+     * Each character in the order string is converted to a boolean value.
+     * '0' is converted to false and '1' is converted to true.
+     * Throws an exception if an entry in the order string is not '0' or '1'.
+     * Throws an exception if the orders have different sizes.
+     *
+     * @param ordersStringList the list of string orders
+     * @return the boolean array representing the orders
+     * @throws Error if an entry in the order string is not '0' or '1'
+     * @throws Error if the orders have different sizes
+     */
     public static boolean[][] listOfStringOrdersToBooleanArray(List<String> ordersStringList) {
         // remove comment lines starting with c
         ordersStringList.removeIf(line -> line.charAt(0) == 'c');
@@ -40,23 +56,20 @@ public class TxtConverter {
      */
     public static List<int[]> stringListToListOfIntArrays(List<String> cnfStr) {
         ArrayList<int[]> cnfArr = new ArrayList<>();
-        cnfStr.removeIf(line -> line.charAt(0) == 'c');
-        int start = 0;
-        // If the first line still contains the cnf description
-        if (cnfStr.get(0).charAt(0) == 'p') {
-            //then skip this line
-            start = 1;
-        }
         //go through cnf
-        for (int i = start; i < cnfStr.size(); i++) {
-            //split line on blank
-            String[] aufgeteilt = cnfStr.get(i).split(" ");
-            //Reserve memory. Decrement by 1 to ignore the 0 at the end of the line.
-            int[] klausel = new int[aufgeteilt.length - 1];
-            for (int x = 0; x < klausel.length; x++) {
-                klausel[x] = Integer.parseInt(aufgeteilt[x]);
+        for (String line : cnfStr) {
+            // skip comment lines starting with c and the cnf header starting with p
+            if (line.startsWith("c") || line.startsWith("p")) {
+                continue;
             }
-            cnfArr.add(klausel);
+            //split line on blank
+            String[] split = line.split(" ");
+            //Reserve memory. Decrement by 1 to ignore the 0 at the end of the line.
+            int[] clause = new int[split.length - 1];
+            for (int x = 0; x < clause.length; x++) {
+                clause[x] = Integer.parseInt(split[x]);
+            }
+            cnfArr.add(clause);
         }
         return cnfArr;
     }
