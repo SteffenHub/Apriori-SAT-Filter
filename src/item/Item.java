@@ -11,17 +11,25 @@ public class Item {
     private final int itemNumber;
 
     /**
-     * The Orders where this item is selected
+     * The Orders where this item is in as boolean representation.
+     * If there is a total of 5 Orders and this item is in Order 1, 2 and 5 the boolean Array will look like:
+     * [true, true, false, false, true]
      */
     private boolean[] inWhichOrders;
 
+    /**
+     * The number of orders in which the item is included.
+     * It is calculated by the number of true inside 'this.inWhichOrders'
+     * @See Item#setInWhichOrders
+     */
     private int inHowManyOrders;
 
     /**
      * Constructor for an Item.
-     * iAmInThisOrders is set to null and will be assigned by Orders
+     * iAmInThisOrders is set to null and will be assigned in the Orders class
      *
-     * @param itemNumber The unique ItemNumber which matches the variable Number in the SatSolver(the lowest number is 1)
+     * @param itemNumber The unique ItemNumber which matches the variable Number
+     *                  in the SatSolver resp. In the RuleSet(the lowest number is 1)
      */
     public Item(int itemNumber) {
         this.itemNumber = itemNumber;
@@ -30,27 +38,28 @@ public class Item {
     }
 
     /**
-     * getter for the unique Item Number
+     * Getter for the unique Item Number
      *
-     * @return this Item Number
+     * @return This Item Number
      */
     public int getItemNumber() {
         return this.itemNumber;
     }
 
     /**
-     * getter for the Orders where this Item is selected
+     * Getter for the Orders where this Item is selected.
+     * Represented as e.g.:  [true, true, false, false, true] with a total of 5 Orders
      *
-     * @return the Orders where this Item is selected. Null if you haven't searched for them yet
+     * @return The Orders where this Item is selected. Null if you haven't searched for them yet
      */
     public boolean[] getInWhichOrders() {
         return this.inWhichOrders;
     }
 
     /**
-     * setter for the Orders where this Item is selected
+     * Setter for the Orders where this Item is in
      *
-     * @param orders the Orders where this Item is selected
+     * @param orders the Orders where this Item is in
      */
     public void setInWhichOrders(boolean[] orders){
         this.inWhichOrders = orders;
@@ -60,6 +69,11 @@ public class Item {
                 ++this.inHowManyOrders;
     }
 
+    /**
+     * Returns the number of orders in which the item is included.
+     *
+     * @return The number of orders in which the item is included.
+     */
     public int getInHowManyOrders() {
         return inHowManyOrders;
     }
