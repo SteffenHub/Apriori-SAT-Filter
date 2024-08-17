@@ -12,10 +12,12 @@ import java.util.Scanner;
 public class TxtReaderWriter {
 
     /**
-     * Reads a file and outputs the contents to a list of strings.
+     * Retrieves the content of a text file located in the same path.
+     * Each line of the file is stored as a separate string in a list.
      *
-     * @param nameOfFileWithEnding full name with file extension z.B.: "rules.txt"
-     * @return Contents of the specified file
+     * @param nameOfFileWithEnding the name of the file (including the file extension)
+     * @return the content of the text file as a list of strings
+     * @throws FileNotFoundException if the file specified by the name does not exist
      */
     public static List<String> getTxtFromSamePath(String nameOfFileWithEnding) throws FileNotFoundException {
         List<String> txtContent = new ArrayList<>();
@@ -29,6 +31,13 @@ public class TxtReaderWriter {
         return txtContent;
     }
 
+    /**
+     * Writes the content of a list of strings to a file.
+     *
+     * @param nameOfFileWithEnding the name of the file (including the file extension) to write to
+     * @param contentList the list of strings to write to the file
+     * @throws IOException if an I/O error occurs while writing the file
+     */
     public static void writeListOfStrings(String nameOfFileWithEnding, List<String> contentList) throws IOException {
         FileWriter fw = new FileWriter("./" + nameOfFileWithEnding, StandardCharsets.UTF_8);
         BufferedWriter writer = new BufferedWriter(fw);
