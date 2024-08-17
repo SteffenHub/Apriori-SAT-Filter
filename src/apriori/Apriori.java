@@ -1,5 +1,6 @@
 package apriori;
 
+import order.DifferentOrderSIzeException;
 import order.Orders;
 import args.ArgsInput;
 import item.Item;
@@ -22,7 +23,7 @@ public class Apriori {
         this.argsInput = argsInput;
     }
 
-    public HashMap<ItemSet, Double> run() throws TimeoutException {
+    public HashMap<ItemSet, Double> run() throws TimeoutException, DifferentOrderSIzeException {
 
         HashMap<ItemSet, Double> result = new HashMap<>();
 

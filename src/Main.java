@@ -1,3 +1,4 @@
+import order.DifferentOrderSIzeException;
 import order.Orders;
 import apriori.Apriori;
 import apriori.Conclusion;
@@ -19,7 +20,7 @@ import java.util.*;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, ContradictionException, TimeoutException, ReadArgsException {
+    public static void main(String[] args) throws IOException, ContradictionException, TimeoutException, ReadArgsException, DifferentOrderSIzeException {
 
         //read args
         ArgsInput argsInput = new ArgsInput(args);

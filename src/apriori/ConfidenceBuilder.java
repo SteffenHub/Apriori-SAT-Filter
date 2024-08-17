@@ -1,5 +1,6 @@
 package apriori;
 
+import order.DifferentOrderSIzeException;
 import order.Orders;
 import args.ArgsInput;
 
@@ -18,7 +19,7 @@ public class ConfidenceBuilder {
         this.argsInput = argsInput;
     }
 
-    public Conclusion[] run(){
+    public Conclusion[] run() throws DifferentOrderSIzeException {
         int count = 0;
         int maxCount = this.allConclusions.length;
         for (Conclusion conclusion : this.allConclusions) {

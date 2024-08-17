@@ -14,7 +14,7 @@ public class Orders {
         }
     }
 
-    public double getSupport(ItemSet itemSet) {
+    public double getSupport(ItemSet itemSet) throws DifferentOrderSIzeException {
 
         if (itemSet.getItemArray().length == 0) return 0.0;
 
@@ -70,7 +70,10 @@ public class Orders {
      * @param orders2 the second boolean array
      * @return a new boolean array representing the intersection of the input arrays
      */
-    public boolean[] intersection(boolean[] orders1, boolean[] orders2) {
+    public boolean[] intersection(boolean[] orders1, boolean[] orders2) throws DifferentOrderSIzeException {
+        if (orders1.length != orders2.length){
+            throw new DifferentOrderSIzeException(orders1.length + " != " + orders2.length);
+        }
         boolean[] result = new boolean[orders1.length];
         for (int i = 0; i < orders1.length; i++)
             if (orders1[i] && orders2[i])
