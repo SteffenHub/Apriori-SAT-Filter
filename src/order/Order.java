@@ -1,6 +1,7 @@
 package order;
 
 import item.Item;
+import java.util.Objects;
 
 /**
  * Represents an order in the system.
@@ -62,5 +63,17 @@ public class Order {
      */
     public int howManyItems(){
         return this.itemsBool.length;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || this.getClass() != other.getClass()) return false;
+        Order o = (Order) other;
+        return this.getOrderNumber() == o.getOrderNumber();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getOrderNumber());
     }
 }

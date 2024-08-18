@@ -1,4 +1,5 @@
 // project imports
+import apriori.MApriori;
 import order.DifferentOrderSIzeException;
 import order.Orders;
 import apriori.Apriori;
@@ -55,7 +56,7 @@ public class Main {
         Orders orders = new Orders(ordersBool);
 
         // initiate Apriori and start the combination calculation
-        Apriori apriori = new Apriori(satSolver, orders, argsInput);
+        MApriori apriori = new MApriori(satSolver, orders, argsInput);
         HashMap<ItemSet, Double> allPossibleCombinationFiltered = apriori.run();
 
         //save to directory

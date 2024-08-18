@@ -3,6 +3,9 @@ package order;
 import item.Item;
 import item.ItemSet;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * The Orders class is designed to manage a collection of all Order objects.
  * This includes calculating their 'support value'.
@@ -87,6 +90,51 @@ public class Orders {
         }
         return isHereBool;
     }
+
+    public ItemSet getSupport(ItemSet itemSet1, ItemSet itemSet2) throws WrongIndexForItemException {
+        if (itemSet1.getItemArray().length == 0 || itemSet2.getItemArray().length == 0){
+            throw new Error("itemSet can't be empty");
+        }
+        if (itemSet1.getInWhichOrders() == null){
+            throw new Error("help");
+            //Set<Order> isHere = getWhichOrdersSet(itemSet1);
+            //itemSet1.setInWhichOrders(isHere, (double) isHere.size() /this.orders[0].howManyItems());
+        }
+        if (itemSet2.getInWhichOrders() == null){
+            throw new Error("help");
+            //Set<Order> isHere = getWhichOrdersSet(itemSet1);
+            //itemSet2.setInWhichOrders(isHere, (double) isHere.size() /this.orders[0].howManyItems());
+        }
+        Set<Integer> inWhichOrdersCopy = new HashSet<>();
+        for(int i : itemSet1.getInWhichOrders()){
+            if (itemSet2.getInWhichOrders().contains(i)){
+                inWhichOrdersCopy.add(i);
+            }
+        }
+        ItemSet newItemSet = itemSet1.union(itemSet2);
+        newItemSet.setInWhichOrders(inWhichOrdersCopy, (double) inWhichOrdersCopy.size() /this.orders[0].howManyItems());
+        return newItemSet;
+    }
+
+
+    public Set<Integer> getWhichOrdersSet(ItemSet itemSet) throws WrongIndexForItemException {
+        Set<Integer> isHere = new HashSet<>();
+        for (Order order : this.orders) {
+            boolean allItemsIn = true;
+            for (Item item : itemSet.getItemArray()) {
+                if (!order.isIn(item)) {
+                    allItemsIn = false;
+                    break;
+                }
+            }
+            if (allItemsIn){
+                isHere.add(order.getOrderNumber());
+            }
+        }
+        return isHere;
+    }
+
+
 
 
     /**

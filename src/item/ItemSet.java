@@ -1,5 +1,7 @@
 package item;
 
+import order.Order;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,6 +17,23 @@ public class ItemSet {
      */
     private final Item[] itemArray;
 
+    public Set<Integer> getInWhichOrders() {
+        return inWhichOrders;
+    }
+
+    public void setInWhichOrders(Set<Integer> inWhichOrders, double support) {
+        this.inWhichOrders = inWhichOrders;
+        this.support = support;
+    }
+
+    public double getSupport(){
+        return this.support;
+    }
+
+    private Set<Integer> inWhichOrders;
+
+    private double support;
+
     /**
      * Constructor for an ItemSet.
      * the given Array will be stored sorted.
@@ -23,6 +42,8 @@ public class ItemSet {
     public ItemSet(Item[] itemArray) {
         this.itemArray = itemArray;
         this.sortItemArray(this.itemArray);
+        this.inWhichOrders = null;
+        this.support = Double.NaN;
     }
 
     /**
