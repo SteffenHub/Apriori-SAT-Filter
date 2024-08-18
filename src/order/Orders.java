@@ -105,8 +105,8 @@ public class Orders {
             //Set<Order> isHere = getWhichOrdersSet(itemSet1);
             //itemSet2.setInWhichOrders(isHere, (double) isHere.size() /this.orders[0].howManyItems());
         }
-        Set<Integer> inWhichOrdersCopy = new HashSet<>();
-        for(int i : itemSet1.getInWhichOrders()){
+        Set<Order> inWhichOrdersCopy = new HashSet<>();
+        for(Order i : itemSet1.getInWhichOrders()){
             if (itemSet2.getInWhichOrders().contains(i)){
                 inWhichOrdersCopy.add(i);
             }
@@ -117,8 +117,8 @@ public class Orders {
     }
 
 
-    public Set<Integer> getWhichOrdersSet(ItemSet itemSet) throws WrongIndexForItemException {
-        Set<Integer> isHere = new HashSet<>();
+    public Set<Order> getWhichOrdersSet(ItemSet itemSet) throws WrongIndexForItemException {
+        Set<Order> isHere = new HashSet<>();
         for (Order order : this.orders) {
             boolean allItemsIn = true;
             for (Item item : itemSet.getItemArray()) {
@@ -128,7 +128,7 @@ public class Orders {
                 }
             }
             if (allItemsIn){
-                isHere.add(order.getOrderNumber());
+                isHere.add(order);
             }
         }
         return isHere;

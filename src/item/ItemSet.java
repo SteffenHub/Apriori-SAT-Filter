@@ -17,11 +17,11 @@ public class ItemSet {
      */
     private final Item[] itemArray;
 
-    public Set<Integer> getInWhichOrders() {
+    public Set<Order> getInWhichOrders() {
         return inWhichOrders;
     }
 
-    public void setInWhichOrders(Set<Integer> inWhichOrders, double support) {
+    public void setInWhichOrders(Set<Order> inWhichOrders, double support) {
         this.inWhichOrders = inWhichOrders;
         this.support = support;
     }
@@ -30,7 +30,7 @@ public class ItemSet {
         return this.support;
     }
 
-    private Set<Integer> inWhichOrders;
+    private Set<Order> inWhichOrders;
 
     private double support;
 
