@@ -105,12 +105,8 @@ public class Orders {
             //Set<Order> isHere = getWhichOrdersSet(itemSet1);
             //itemSet2.setInWhichOrders(isHere, (double) isHere.size() /this.orders[0].howManyItems());
         }
-        Set<Order> inWhichOrdersCopy = new HashSet<>();
-        for(Order i : itemSet1.getInWhichOrders()){
-            if (itemSet2.getInWhichOrders().contains(i)){
-                inWhichOrdersCopy.add(i);
-            }
-        }
+        Set<Order> inWhichOrdersCopy = new HashSet<>(itemSet1.getInWhichOrders());
+        inWhichOrdersCopy.retainAll(itemSet2.getInWhichOrders());
         ItemSet newItemSet = itemSet1.union(itemSet2);
         newItemSet.setInWhichOrders(inWhichOrdersCopy, (double) inWhichOrdersCopy.size() /this.orders[0].howManyItems());
         return newItemSet;
