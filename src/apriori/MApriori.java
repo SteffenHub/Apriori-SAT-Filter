@@ -77,7 +77,7 @@ public class MApriori {
 
         for(ItemSet itemSet : stillPossibleItems){
             Set<Order> isHere = this.orders.getWhichOrdersSet(itemSet);
-            itemSet.setInWhichOrders(isHere, (double) isHere.size() /this.orders.getOrders()[0].howManyItems());
+            itemSet.setInWhichOrders(isHere, (double) isHere.size() /this.orders.getOrders().length);
         }
 
 
@@ -165,8 +165,20 @@ public class MApriori {
             }
 
             //update stillPossibleItems
-            List<ItemSet> newConfigurationsFromThisCalculation = new ArrayList<>(currentSet);
-            stillPossibleItems = new HashSet<>(newConfigurationsFromThisCalculation);
+            Set<ItemSet> newStillPossibleItems = new HashSet<>();
+            for (ItemSet prSet : currentSet) {
+                for (Item item: prSet.getItemArray()){
+                    for (ItemSet itemSet : stillPossibleItems){
+                        if (itemSet.getItemArray().length != 1){
+                            continue;
+                        }
+                        if (itemSet.getItemArray()[0].getItemNumber() == item.getItemNumber()){
+                            newStillPossibleItems.add(itemSet);
+                        }
+                    }
+                }
+            }
+            stillPossibleItems = newStillPossibleItems;
             ++depth;
             System.out.println("Found new Candidates in this iteration: " + currentSet.size());
             System.out.println("Candidates contain " + stillPossibleItems.size() + " different Items");
