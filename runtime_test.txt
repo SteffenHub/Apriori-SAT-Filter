@@ -1,4 +1,4 @@
-
+SET OF ORDER
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.4_0.4_200_true
 Out Of Memory with 30,8 GB RAM at 6 minutes and 21 sec
