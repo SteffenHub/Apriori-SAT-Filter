@@ -1,24 +1,34 @@
-
-
-
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.8_0.8_200_true
+normal:
 time for calculation search all combinations: 1sec
 time for calculation: 1sec
 
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.6_0.6_200_true
+normal:
 time for calculation search all combinations: 3sec
 time for calculation: 3sec
+save sup:
+time for calculation search all combinations: 2sec
+time for calculation: 2sec
 
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.4_0.4_200_true
+normal:
 time for calculation search all combinations: 26sec
 time for calculation: 31sec
+save sup:
+time for calculation search all combinations: 16sec
+time for calculation: 16sec
 
 
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.2_0.2_200_true
+normal:
 time for calculation search all combinations: 463sec
 time for calculation: 805sec
+save sup:
+time for calculation search all combinations: 291sec
+time for calculation: 332sec
 
 

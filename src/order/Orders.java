@@ -3,6 +3,11 @@ package order;
 import item.Item;
 import item.ItemSet;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 /**
  * The Orders class is designed to manage a collection of all Order objects.
  * This includes calculating their 'support value'.
@@ -14,6 +19,8 @@ public class Orders {
      */
     private final Order[] orders;
 
+    private final Set<ItemSet> allCheckedItemSets;
+
     /**
      * Represents a collection of orders.
      *
@@ -24,6 +31,7 @@ public class Orders {
         for (int i = 0; i < ordersBool.length; i++) {
             orders[i] = new Order(ordersBool[i], i + 1);
         }
+        this.allCheckedItemSets = new HashSet<>();
     }
 
     /**
@@ -43,6 +51,15 @@ public class Orders {
     public double getSupport(ItemSet itemSet) throws DifferentOrderSIzeException, WrongIndexForItemException {
 
         if (itemSet.getItemArray().length == 0) return 0.0;
+        if (!Double.isNaN(itemSet.getSupport())){
+            return itemSet.getSupport();
+        }
+        Optional<ItemSet> thisItemSet = allCheckedItemSets.stream()
+                .filter(item -> item.equals(itemSet))
+                .findFirst();
+        if (thisItemSet.isPresent()){
+            return thisItemSet.get().getSupport();
+        }
 
         //check if all inWhichOrders is correct else search them
         for (Item item : itemSet.getItemArray()) {
@@ -68,7 +85,10 @@ public class Orders {
         for (boolean order : intersection)
             if (order)
                 ++countInHowManyOrders;
-        return (double) countInHowManyOrders / this.orders.length;
+        double support = (double) countInHowManyOrders / this.orders.length;
+        itemSet.setSupport(support);
+        this.allCheckedItemSets.add(itemSet);
+        return support;
     }
 
 
