@@ -1,0 +1,13 @@
+
+SET OF ORDERS WITH RETAIN ALL
+
+allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.8_0.8_200_true
+time for calculation search all combinations: 2sec
+
+
+allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.6_0.6_200_true
+time for calculation search all combinations: 65sec
+
+
+allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.4_0.4_200_true
+Out of Memory with 30,8 GB RAM at 5 minutes and 43 sec
