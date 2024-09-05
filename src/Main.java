@@ -58,18 +58,24 @@ public class Main {
         Apriori apriori = new Apriori(satSolver, orders, argsInput);
         HashMap<ItemSet, Double> allPossibleCombinationFiltered = apriori.run();
 
+        // Print the needed time
+        Instant end = Instant.now();
+        Duration interval = Duration.between(start, end);
+        System.out.println("time for calculation search all combinations: " + interval.getSeconds() + "sec");
+
         //save to directory
         List<String> allPossibleCombinationFilteredString = new ArrayList<>();
         for (ItemSet combination: allPossibleCombinationFiltered.keySet()) {
             allPossibleCombinationFilteredString.add(combination + " " + allPossibleCombinationFiltered.get(combination));
         }
         TxtReaderWriter.writeListOfStrings("allPossibleCombination_Apriori_"
-                        + argsInput.getRuleFileWithoutPath() + "_"
-                        + argsInput.getOderFileWithoutPath() + "_"
-                        + argsInput.getMinSupport() + "_"
-                        + argsInput.getMinConfidence() + "_"
-                        + argsInput.getDepth()
-                        + ".txt", allPossibleCombinationFilteredString);
+                + argsInput.getRuleFileWithoutPath() + "_"
+                + argsInput.getOderFileWithoutPath() + "_"
+                + argsInput.getMinSupport() + "_"
+                + argsInput.getMinConfidence() + "_"
+                + argsInput.getDepth() + "_"
+                + argsInput.getUseSatSolver()
+                + ".txt", allPossibleCombinationFilteredString);
 
         // generate the conclusions with all the possible combinations found in Apriori process
         Conclusion[] allFilteredConclusions = new ConclusionBuilder(allPossibleCombinationFiltered, orders, argsInput).run();
@@ -80,16 +86,17 @@ public class Main {
             allConclusionsString.add(conclusion.toString());
         }
         TxtReaderWriter.writeListOfStrings("result_apriori_"
-                        + argsInput.getRuleFileWithoutPath() + "_"
-                        + argsInput.getOderFileWithoutPath() + "_"
-                        + argsInput.getMinSupport() + "_"
-                        + argsInput.getMinConfidence() + "_"
-                        + argsInput.getDepth()
-                        + ".txt", allConclusionsString);
+                + argsInput.getRuleFileWithoutPath() + "_"
+                + argsInput.getOderFileWithoutPath() + "_"
+                + argsInput.getMinSupport() + "_"
+                + argsInput.getMinConfidence() + "_"
+                + argsInput.getDepth() + "_"
+                + argsInput.getUseSatSolver()
+                + ".txt", allConclusionsString);
 
         // Print the needed time
-        Instant end = Instant.now();
-        Duration interval = Duration.between(start, end);
+        end = Instant.now();
+        interval = Duration.between(start, end);
         System.out.println("time for calculation: " + interval.getSeconds() + "sec");
     }
 }
