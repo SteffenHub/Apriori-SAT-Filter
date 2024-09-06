@@ -17,7 +17,7 @@ allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuil
 normal:
 time for calculation search all combinations: 26sec
 time for calculation: 31sec
-save sup:
+save support of more itemSets:
 time for calculation search all combinations: 16sec
 time for calculation: 16sec
 
@@ -27,7 +27,7 @@ allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuil
 normal:
 time for calculation search all combinations: 463sec
 time for calculation: 805sec
-save sup:
+save support of more itemSets:
 time for calculation search all combinations: 291sec
 time for calculation: 332sec
 
