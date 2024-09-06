@@ -1,24 +1,24 @@
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.2_0.2_200_true
-SET OF INTEGER: not tested, because of Out Of Memory in 0.4
-INTEGER Array: time for calculation search all combinations: 182sec
-SET OF ORDER: not tested, because of Out Of Memory in 0.4
-SET OF ORDERS WITH RETAIN ALL: not tested, because of Out Of Memory in 0.4
+M-Apriori SET OF INTEGER: not tested, because of Out Of Memory in 0.4
+M-Apriori INTEGER Array: time for calculation search all combinations: 182sec
+M-Apriori SET OF ORDER: not tested, because of Out Of Memory in 0.4
+M-Apriori SET OF ORDERS WITH RETAIN ALL: not tested, because of Out Of Memory in 0.4
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.4_0.4_200_true
-SET OF INTEGER: Out Of Memory with 21 GB at 3 minutes and 27 sec
-INTEGER Array: time for calculation search all combinations: 16sec
-SET OF ORDER: Out Of Memory with 30,8 GB RAM at 6 minutes and 21 sec
-SET OF ORDERS WITH RETAIN ALL: Out of Memory with 30,8 GB RAM at 5 minutes and 43 sec
+M-Apriori SET OF INTEGER: Out Of Memory with 21 GB at 3 minutes and 27 sec
+M-Apriori INTEGER Array: time for calculation search all combinations: 16sec
+M-Apriori SET OF ORDER: Out Of Memory with 30,8 GB RAM at 6 minutes and 21 sec
+M-Apriori SET OF ORDERS WITH RETAIN ALL: Out of Memory with 30,8 GB RAM at 5 minutes and 43 sec
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.6_0.6_200_true
-SET OF INTEGER: time for calculation search all combinations: 39sec
-INTEGER Array: time for calculation search all combinations: 3sec
-SET OF ORDER: time for calculation search all combinations: 55sec
-SET OF ORDERS WITH RETAIN ALL: time for calculation search all combinations: 65sec
+M-Apriori SET OF INTEGER: time for calculation search all combinations: 39sec
+M-Apriori INTEGER Array: time for calculation search all combinations: 3sec
+M-Apriori SET OF ORDER: time for calculation search all combinations: 55sec
+M-Apriori SET OF ORDERS WITH RETAIN ALL: time for calculation search all combinations: 65sec
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.8_0.8_200_true
-SET OF INTEGER: time for calculation search all combinations: 2sec
-INTEGER Array: time for calculation search all combinations: 1sec
-SET OF ORDER: time for calculation search all combinations: 2sec
-SET OF ORDERS WITH RETAIN ALL: time for calculation search all combinations: 2sec
+M-Apriori SET OF INTEGER: time for calculation search all combinations: 2sec
+M-Apriori INTEGER Array: time for calculation search all combinations: 1sec
+M-Apriori SET OF ORDER: time for calculation search all combinations: 2sec
+M-Apriori SET OF ORDERS WITH RETAIN ALL: time for calculation search all combinations: 2sec
