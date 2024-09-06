@@ -56,9 +56,8 @@ public class Main {
         Orders orders = new Orders(ordersBool);
 
         // initiate Apriori and start the combination calculation
-        boolean useMApriori = false;
         HashMap<ItemSet, Double> allPossibleCombinationFiltered;
-        if (useMApriori){
+        if (argsInput.getUseMApriori()){
             MApriori apriori = new MApriori(satSolver, orders, argsInput);
             allPossibleCombinationFiltered = apriori.run();
         }else {

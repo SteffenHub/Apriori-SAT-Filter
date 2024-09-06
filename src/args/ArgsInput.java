@@ -50,6 +50,8 @@ public class ArgsInput {
      */
     private String orderFile;
 
+    private boolean useMApriori;
+
     /**
      * Initializes an instance of ArgsInput with the given arguments.
      *
@@ -63,6 +65,7 @@ public class ArgsInput {
         this.ruleFile = "";
         this.orderFile = "";
         this.useSatSolver = true;
+        this.useMApriori = false;
         this.readArgs(args);
     }
 
@@ -94,11 +97,18 @@ public class ArgsInput {
             if (arg.equals("--max-depth")){
                 this.depth = Integer.parseInt(args[i+1]);
             }
+            if (arg.equals("--use-m-apriori")){
+                this.useMApriori = Boolean.parseBoolean(args[i+1]);
+            }
         }
         // check if there is a required argument missing
         if (Double.isNaN(this.minSupport) || Double.isNaN(this.minConfidence) || depth == -1 || this.ruleFile.isEmpty() || this.orderFile.isEmpty()){
             throw new ReadArgsException(Arrays.toString(args));
         }
+    }
+
+    public boolean getUseMApriori() {
+        return useMApriori;
     }
 
     /**
