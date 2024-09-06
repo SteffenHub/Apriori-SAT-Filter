@@ -50,6 +50,10 @@ public class ArgsInput {
      */
     private String orderFile;
 
+    /**
+     * Flag indicating whether the M-Apriori algorithm should be used.
+     * This variable is set based on the command line arguments provided by the user.
+     */
     private boolean useMApriori;
 
     /**
@@ -107,6 +111,11 @@ public class ArgsInput {
         }
     }
 
+    /**
+     * Getter method for the useMApriori field.
+     *
+     * @return true if M-Apriori algorithm should be used, false otherwise.
+     */
     public boolean getUseMApriori() {
         return useMApriori;
     }
