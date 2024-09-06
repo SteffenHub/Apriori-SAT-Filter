@@ -9,7 +9,11 @@ import order.WrongIndexForItemException;
 import org.sat4j.specs.TimeoutException;
 import satSolver.SatSolver;
 import satSolver.SolverUsages;
+import txtImportExport.TxtReaderWriter;
 
+import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 /**
@@ -54,7 +58,7 @@ public class Apriori {
      * @throws DifferentOrderSIzeException if there are different order sizes in the orders.
      * @throws WrongIndexForItemException if an invalid index is provided for an item.
      */
-    public HashMap<ItemSet, Double> run() throws TimeoutException, DifferentOrderSIzeException, WrongIndexForItemException {
+    public HashMap<ItemSet, Double> run() throws TimeoutException, DifferentOrderSIzeException, WrongIndexForItemException, IOException {
 
         // This is the final result variable it will be filled during the process
         HashMap<ItemSet, Double> result = new HashMap<>();
@@ -87,9 +91,25 @@ public class Apriori {
         currentSet.put(new ItemSet(new Item[]{}), 0.0);
 
         int depth = 1;
+        List<String> statusLog = new ArrayList<>();
+        statusLog.add("depth, " +
+                "checked combinations, " +
+                "survived itemSets, " +
+                "survived items, " +
+                "searched for support, " +
+                "skipped because checked already checked in other combination, " +
+                "skipped because already checked in previous iterations, " +
+                "skipped because you can't choose the combination, " +
+                "skipped because you have to choose the combination, " +
+                "calculation time in sec");
         // break the while loop if the max depth from args input reached or all possible combinations checked
         while (depth <= this.argsInput.getDepth() && !stillPossibleItems.isEmpty()) {
-
+            Instant start = Instant.now();
+            int searchedForSupportTimes = 0;
+            int skippedBecauseCheckedOtherwise = 0;
+            int skippedBecauseAlreadyChecked = 0;
+            int skippedBecauseCantChoose = 0;
+            int skippedBecauseYouHaveToChoose = 0;
             // The items that will be considered in this run and builds the cross product with the 'currentSet' from previous iteration
             Item[] stillPossibleItemArray = stillPossibleItems.toArray(new Item[0]);
 
@@ -113,12 +133,14 @@ public class Apriori {
                     // Check if this configuration was already considered reversed e.g. {1} UNION {2} = {1,2} = {2} UNION {1}.
                     // or {16,67} UNION {80} = {16,67,80} = {67,80} UNION {16}
                     if (currentSet.containsKey(union)) {
+                        ++skippedBecauseCheckedOtherwise;
                         continue;
                     }
 
                     // If an Item is added to the combination, which is already checked in the previous iteration
                     // e.g. [item1, item2] and item2 added
                     if (union.getItemArray().length < depth) {
+                        ++skippedBecauseAlreadyChecked;
                         continue;
                     }
 
@@ -127,6 +149,7 @@ public class Apriori {
                     // So these Items are depend on each other and aren't interesting for the result
                     if (argsInput.getUseSatSolver()) {
                         if (!satSolver.isSatisfiableWithConjunct(union.toIntArray())){
+                            ++ skippedBecauseCantChoose;
                             continue;
                         }
                     }
@@ -136,11 +159,13 @@ public class Apriori {
                     // and this item depend on each other and aren't interesting for the result
                     if (depth >= 2 && argsInput.getUseSatSolver()) {
                         if (!satSolver.isSatisfiableWithClause(Arrays.stream(union.toIntArray()).map(i -> -i).toArray())) {
+                            ++ skippedBecauseYouHaveToChoose;
                             continue;
                         }
                     }
 
                     // All checks passed so search for the support
+                    ++ searchedForSupportTimes;
                     double support = this.orders.getSupport(union);
 
                     // If the itemSet(union) fulfills the support we save them
@@ -151,18 +176,36 @@ public class Apriori {
                     }
                 }
             }
-
             //update stillPossibleItems
             List<ItemSet> newConfigurationsFromThisCalculation = new ArrayList<>(currentSet.keySet());
             stillPossibleItems = new HashSet<>();
             for (ItemSet prSet : newConfigurationsFromThisCalculation) {
                 stillPossibleItems.addAll(Arrays.asList(prSet.getItemArray()));
             }
-            ++depth;
             System.out.println("Found new Candidates in this iteration: " + currentSet.size());
             System.out.println("Candidates contain " + stillPossibleItems.size() + " different Items");
-            System.out.println();
+            System.out.println("Needed time for this iteration: " + Duration.between(start, Instant.now()).getSeconds());
+
+            statusLog.add(depth+", "
+                    +counter+", "
+                    +currentSet.size()+", "
+                    +stillPossibleItems.size()+", "
+                    +searchedForSupportTimes+", "
+                    +skippedBecauseCheckedOtherwise+", "
+                    +skippedBecauseAlreadyChecked+", "
+                    +skippedBecauseCantChoose+", "
+                    +skippedBecauseYouHaveToChoose+", "
+                    +Duration.between(start, Instant.now()).getSeconds());
+            ++depth;
         }
+        TxtReaderWriter.writeListOfStrings("status_log_"
+                + argsInput.getRuleFileWithoutPath() + "_"
+                + argsInput.getOderFileWithoutPath() + "_"
+                + argsInput.getMinSupport() + "_"
+                + argsInput.getMinConfidence() + "_"
+                + argsInput.getDepth() + "_"
+                + argsInput.getUseSatSolver()
+                + ".txt", statusLog);
         return result;
     }
 
