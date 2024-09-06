@@ -1,0 +1,19 @@
+There are 5 Orders:
+
+Apriori:
+Order1 = 1,2,3
+Order2 = 2,3
+Order3 = 1,3,5
+for order in all orders:
+    is item1 and item2 in order
+
+M Apriori:
+item1 in orders: A=[1,2,5] -> support=3/5
+item2 in orders: B=[1,3,5] -> support=3/5
+-> item1 and item2 in intersection A and B = [1,5] -> support=2/5
+
+
+M Apriori+:
+item1 in orders: A=[t,t,f,f,t] -> support=3/5
+item2 in orders: B=[t,f,t,f,t] -> support=3/5
+-> item1 and item2 in intersection(True) A and B = [t,f,f,f,t] -> support=2/5
