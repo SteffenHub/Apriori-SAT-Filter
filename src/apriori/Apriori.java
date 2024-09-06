@@ -71,13 +71,6 @@ public class Apriori {
         // Still Possible Items updated again at the end of the for loop
         Set<Item> stillPossibleItems = new HashSet<>(Arrays.asList(items));
 
-        // Remove items that already have determined truth or false value
-        if (argsInput.getUseSatSolver()) {
-            for (int determinedVar : SolverUsages.getDeterminedVars(satSolver)) {
-                stillPossibleItems.remove(items[Math.abs(determinedVar) - 1]);
-            }
-        }
-
         // Here are the combinations that pass all filters in this iteration
         // After the first iteration this will be all Items that fulfill the minSupport and pass the SAT check
         // After the second iteration this will be all combinations of two Items that fulfill the minSupport and the Sat check together
@@ -157,7 +150,7 @@ public class Apriori {
                     // Do you have to choose this?
                     // e.g. union={1,2} but (-1 OR -2)=-(1 AND 2) is not possible, so you have to choose {1,2} together
                     // and this item depend on each other and aren't interesting for the result
-                    if (depth >= 2 && argsInput.getUseSatSolver()) {
+                    if (argsInput.getUseSatSolver()) {
                         if (!satSolver.isSatisfiableWithClause(Arrays.stream(union.toIntArray()).map(i -> -i).toArray())) {
                             ++ skippedBecauseYouHaveToChoose;
                             continue;
