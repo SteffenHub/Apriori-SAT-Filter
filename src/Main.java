@@ -57,12 +57,13 @@ public class Main {
 
         // initiate Apriori and start the combination calculation
         boolean useMApriori = false;
+        HashMap<ItemSet, Double> allPossibleCombinationFiltered;
         if (useMApriori){
             MApriori apriori = new MApriori(satSolver, orders, argsInput);
-            HashMap<ItemSet, Double> allPossibleCombinationFiltered = apriori.run();
-        }else{
-        Apriori apriori = new Apriori(satSolver, orders, argsInput);
-        HashMap<ItemSet, Double> allPossibleCombinationFiltered = apriori.run();
+            allPossibleCombinationFiltered = apriori.run();
+        }else {
+            Apriori apriori = new Apriori(satSolver, orders, argsInput);
+            allPossibleCombinationFiltered = apriori.run();
         }
         // Print the needed time
         Instant end = Instant.now();
