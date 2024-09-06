@@ -76,8 +76,8 @@ public class MApriori {
         }
 
         for(ItemSet itemSet : stillPossibleItems){
-            Set<Integer> isHere = this.orders.getWhichOrdersSet(itemSet);
-            itemSet.setInWhichOrders(isHere, (double) isHere.size() /this.orders.getOrders().length);
+            int[] isHere = this.orders.getWhichOrdersSet(itemSet);
+            itemSet.setInWhichOrders(isHere, (double) isHere.length /this.orders.getOrders().length);
         }
 
 

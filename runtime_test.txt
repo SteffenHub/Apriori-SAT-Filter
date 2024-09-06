@@ -1,12 +1,19 @@
-SET OF INTEGER
-allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.4_0.4_200_true
-Out Of Memory with 21 GB at 3 minutes and 27 sec
 
+allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.2_0.2_200_true
+SET OF INTEGER: not tested
+INTEGER SET:: time for calculation search all combinations: 182sec
+
+
+allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.4_0.4_200_true
+SET OF INTEGER: Out Of Memory with 21 GB at 3 minutes and 27 sec
+INTEGER SET: time for calculation search all combinations: 16sec
 
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.6_0.6_200_true
-time for calculation search all combinations: 39sec
+SET OF INTEGER: time for calculation search all combinations: 39sec
+INTEGER SET: time for calculation search all combinations: 3sec
 
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.8_0.8_200_true
-time for calculation search all combinations: 2sec
+SET OF INTEGER: time for calculation search all combinations: 2sec
+INTEGER SET: time for calculation search all combinations: 1sec
