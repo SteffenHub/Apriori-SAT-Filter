@@ -1,29 +1,9 @@
-allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.8_0.8_200_true
-normal:
-time for calculation search all combinations: 1sec
-time for calculation: 1sec
-
-
-allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.6_0.6_200_true
-normal:
-time for calculation search all combinations: 3sec
-time for calculation: 3sec
-save sup:
-time for calculation search all combinations: 2sec
-time for calculation: 2sec
-
-
-allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.4_0.4_200_true
-normal:
-time for calculation search all combinations: 26sec
-time for calculation: 31sec
-save support of more itemSets:
-time for calculation search all combinations: 16sec
-time for calculation: 16sec
-
-
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.2_0.2_200_true
+M-Apriori SET OF INTEGER: not tested, because of Out Of Memory in 0.4
+M-Apriori INTEGER Array: time for calculation search all combinations: 182sec
+M-Apriori SET OF ORDER: not tested, because of Out Of Memory in 0.4
+M-Apriori SET OF ORDERS WITH RETAIN ALL: not tested, because of Out Of Memory in 0.4
 normal:
 time for calculation search all combinations: 463sec
 time for calculation: 805sec
@@ -31,4 +11,36 @@ save support of more itemSets:
 time for calculation search all combinations: 291sec
 time for calculation: 332sec
 
+allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.4_0.4_200_true
+M-Apriori SET OF INTEGER: Out Of Memory with 21 GB at 3 minutes and 27 sec
+M-Apriori INTEGER Array: time for calculation search all combinations: 16sec
+M-Apriori SET OF ORDER: Out Of Memory with 30,8 GB RAM at 6 minutes and 21 sec
+M-Apriori SET OF ORDERS WITH RETAIN ALL: Out of Memory with 30,8 GB RAM at 5 minutes and 43 sec
+normal:
+time for calculation search all combinations: 26sec
+time for calculation: 31sec
+save support of more itemSets:
+time for calculation search all combinations: 16sec
+time for calculation: 16sec
 
+allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.6_0.6_200_true
+M-Apriori SET OF INTEGER: time for calculation search all combinations: 39sec
+M-Apriori INTEGER Array: time for calculation search all combinations: 3sec
+M-Apriori SET OF ORDER: time for calculation search all combinations: 55sec
+M-Apriori SET OF ORDERS WITH RETAIN ALL: time for calculation search all combinations: 65sec
+normal:
+time for calculation search all combinations: 3sec
+time for calculation: 3sec
+save support of more itemSets:
+time for calculation search all combinations: 2sec
+time for calculation: 2sec
+
+allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.8_0.8_200_true
+M-Apriori SET OF INTEGER: time for calculation search all combinations: 2sec
+M-Apriori INTEGER Array: time for calculation search all combinations: 1sec
+M-Apriori SET OF ORDER: time for calculation search all combinations: 2sec
+M-Apriori SET OF ORDERS WITH RETAIN ALL: time for calculation search all combinations: 2sec
+normal:
+time for calculation search all combinations: 1sec
+time for calculation: 1sec
+save support of more itemSets: not tested

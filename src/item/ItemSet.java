@@ -1,5 +1,7 @@
 package item;
 
+import order.Order;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,6 +17,17 @@ public class ItemSet {
      */
     private final Item[] itemArray;
 
+    public int[] getInWhichOrders() {
+        return inWhichOrders;
+    }
+
+    public void setInWhichOrders(int[] inWhichOrders, double support) {
+        this.inWhichOrders = inWhichOrders;
+        this.support = support;
+    }
+
+    private int[] inWhichOrders;
+
     private double support;
 
     /**
@@ -25,6 +38,7 @@ public class ItemSet {
     public ItemSet(Item[] itemArray) {
         this.itemArray = itemArray;
         this.sortItemArray(this.itemArray);
+        this.inWhichOrders = null;
         this.support = Double.NaN;
     }
 

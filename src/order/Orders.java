@@ -3,10 +3,11 @@ package order;
 import item.Item;
 import item.ItemSet;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Orders class is designed to manage a collection of all Order objects.
@@ -107,6 +108,76 @@ public class Orders {
         }
         return isHereBool;
     }
+
+    public ItemSet getSupport(ItemSet itemSet1, ItemSet itemSet2) throws WrongIndexForItemException, DifferentOrderSIzeException {
+        if (itemSet1.getItemArray().length == 0 || itemSet2.getItemArray().length == 0){
+            throw new Error("itemSet can't be empty");
+        }
+        if (itemSet1.getInWhichOrders() == null){
+            throw new Error("help");
+            //Set<Order> isHere = getWhichOrdersSet(itemSet1);
+            //itemSet1.setInWhichOrders(isHere, (double) isHere.size() /this.orders[0].howManyItems());
+        }
+        if (itemSet2.getInWhichOrders() == null){
+            throw new Error("help");
+            //Set<Order> isHere = getWhichOrdersSet(itemSet1);
+            //itemSet2.setInWhichOrders(isHere, (double) isHere.size() /this.orders[0].howManyItems());
+        }
+
+        ItemSet newItemSet = itemSet1.union(itemSet2);
+        int[] inWhichOrders = this.intersection(itemSet1.getInWhichOrders(), itemSet2.getInWhichOrders());
+        double support = (double) inWhichOrders.length /this.orders.length;
+        if (support > 1.0){
+            throw new Error("support is over 100%");
+        }
+        newItemSet.setInWhichOrders(inWhichOrders, support);
+        return newItemSet;
+    }
+
+
+    public int[] getWhichOrdersSet(ItemSet itemSet) throws WrongIndexForItemException {
+        List<Integer> isHere = new ArrayList<>();
+        for (Order order : this.orders) {
+            boolean allItemsIn = true;
+            for (Item item : itemSet.getItemArray()) {
+                if (!order.isIn(item)) {
+                    allItemsIn = false;
+                    break;
+                }
+            }
+            if (allItemsIn){
+                isHere.add(order.getOrderNumber());
+            }
+        }
+        return isHere.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    /**
+     * Forms the intersection of two int arrays.
+     * The Arrays have to be sorted
+     *
+     * @param array1 first int array
+     * @param array2 second int array
+     * @return the intersection of the two arrays
+     */
+    public int[] intersection(int[] array1, int[] array2) {
+        List<Integer> result = new ArrayList<>();
+        int i = 0;
+        int j = 0;
+        while (i < array1.length && j < array2.length) {
+            if (array1[i] < array2[j]) {
+                i++;
+            } else if (array1[i] > array2[j]) {
+                j++;
+            } else {
+                result.add(array1[i]);
+                i++;
+                j++;
+            }
+        }
+        return result.stream().mapToInt(Integer::intValue).toArray();
+    }
+
 
 
     /**

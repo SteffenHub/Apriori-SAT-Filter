@@ -1,4 +1,5 @@
 // project imports
+import apriori.MApriori;
 import order.DifferentOrderSIzeException;
 import order.Orders;
 import apriori.Apriori;
@@ -55,9 +56,14 @@ public class Main {
         Orders orders = new Orders(ordersBool);
 
         // initiate Apriori and start the combination calculation
+        boolean useMApriori = false;
+        if (useMApriori){
+            MApriori apriori = new MApriori(satSolver, orders, argsInput);
+            HashMap<ItemSet, Double> allPossibleCombinationFiltered = apriori.run();
+        }else{
         Apriori apriori = new Apriori(satSolver, orders, argsInput);
         HashMap<ItemSet, Double> allPossibleCombinationFiltered = apriori.run();
-
+        }
         // Print the needed time
         Instant end = Instant.now();
         Duration interval = Duration.between(start, end);
@@ -95,6 +101,7 @@ public class Main {
                 + ".txt", allConclusionsString);
 
         // Print the needed time
+        System.out.println("time for calculation search all combinations: " + interval.getSeconds() + "sec");
         end = Instant.now();
         interval = Duration.between(start, end);
         System.out.println("time for calculation: " + interval.getSeconds() + "sec");
