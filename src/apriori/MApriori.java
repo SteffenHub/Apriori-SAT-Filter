@@ -10,7 +10,11 @@ import order.WrongIndexForItemException;
 import org.sat4j.specs.TimeoutException;
 import satSolver.SatSolver;
 import satSolver.SolverUsages;
+import txtImportExport.TxtReaderWriter;
 
+import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 /**
@@ -55,7 +59,7 @@ public class MApriori {
      * @throws DifferentOrderSIzeException if there are different order sizes in the orders.
      * @throws WrongIndexForItemException if an invalid index is provided for an item.
      */
-    public HashMap<ItemSet, Double> run() throws TimeoutException, DifferentOrderSIzeException, WrongIndexForItemException {
+    public HashMap<ItemSet, Double> run() throws TimeoutException, DifferentOrderSIzeException, WrongIndexForItemException, IOException {
 
         // This is the final result variable it will be filled during the process
         HashMap<ItemSet, Double> result = new HashMap<>();
@@ -68,18 +72,6 @@ public class MApriori {
         // Still Possible Items updated again at the end of the for loop
         Set<ItemSet> stillPossibleItems = new HashSet<>(Arrays.asList(itemSets));
 
-        // Remove items that already have determined truth or false value
-        if (argsInput.getUseSatSolver()) {
-            for (int determinedVar : SolverUsages.getDeterminedVars(satSolver)) {
-                stillPossibleItems.remove(itemSets[Math.abs(determinedVar) - 1]);
-            }
-        }
-
-        for(ItemSet itemSet : stillPossibleItems){
-            int[] isHere = this.orders.getWhichOrdersSet(itemSet);
-            itemSet.setInWhichOrders(isHere, (double) isHere.length /this.orders.getOrders().length);
-        }
-
 
         // Here are the combinations that pass all filters in this iteration
         // After the first iteration this will be all Items that fulfill the minSupport and pass the SAT check
@@ -87,26 +79,38 @@ public class MApriori {
         // ...
         Set<ItemSet> currentSet = new HashSet<>();
 
-        // Add empty itemSet for the first depth iteration
-        // An empty itemSet is meaningless and won't appear in the end result but is needed before the first iteration
-        // to simplify the procedure.
-        // By union an empty ItemSet with a non-empty ItemSet results in the second non-empty ItemSet
-        for (ItemSet itemSet : stillPossibleItems){
-            if (itemSet.getSupport() >= this.argsInput.getMinSupport()){
-                currentSet.add(itemSet);
-            }
-        }
-        stillPossibleItems = currentSet;
+        List<String> statusLog = new ArrayList<>();
+        statusLog.add("depth, " +
+                "checked combinations, " +
+                "survived itemSets, " +
+                "survived items, " +
+                "searched for support, " +
+                "skipped because checked already checked in other combination, " +
+                "skipped because already checked in previous iterations, " +
+                "skipped because you can't choose the combination, " +
+                "skipped because you have to choose the combination, " +
+                "calculation time in sec");
 
-        int depth = 2;
+        int depth = 1;
         // break the while loop if the max depth from args input reached or all possible combinations checked
         while (depth <= this.argsInput.getDepth() && !stillPossibleItems.isEmpty()) {
+            Instant start = Instant.now();
+            int searchedForSupportTimes = 0;
+            int skippedBecauseCheckedOtherwise = 0;
+            int skippedBecauseAlreadyChecked = 0;
+            int skippedBecauseCantChoose = 0;
+            int skippedBecauseYouHaveToChoose = 0;
 
             // The items that will be considered in this run and builds the cross product with the 'currentSet' from previous iteration
             ItemSet[] stillPossibleItemArray = stillPossibleItems.toArray(new ItemSet[0]);
 
             // All combinations from the previous calculation that build the cross product with the 'stillPossibleItems' from previous iteration
             List<ItemSet> keyList = new ArrayList<>(currentSet);
+
+            if (depth ==1){
+                keyList = new ArrayList<>(stillPossibleItems);
+                stillPossibleItemArray = new ItemSet[]{new ItemSet(new Item[]{new Item(-1)})};
+            }
 
             // Clear the currentSet to fill it with the new Combinations in this iteration
             currentSet = new HashSet<>();
@@ -120,17 +124,23 @@ public class MApriori {
                     System.out.println("Depth: " + depth + "/" + this.argsInput.getDepth() + " : " + "combinations to check: " + counter + "/" + stillPossibleItemArray.length * keyList.size());
 
                     // Union the itemSet with the new Item
-                    ItemSet union = itemSet.union(item); // e.g. {1,2,3} UNION {7} = {1,2,3,7}
-
+                    ItemSet union;
+                    if (depth == 1){
+                        union = itemSet;
+                    }else {
+                        union = itemSet.union(item); // e.g. {1,2,3} UNION {7} = {1,2,3,7}
+                    }
                     // Check if this configuration was already considered reversed e.g. {1} UNION {2} = {1,2} = {2} UNION {1}.
                     // or {16,67} UNION {80} = {16,67,80} = {67,80} UNION {16}
                     if (currentSet.contains(union)) {
+                        ++skippedBecauseCheckedOtherwise;
                         continue;
                     }
 
                     // If an Item is added to the combination, which is already checked in the previous iteration
                     // e.g. [item1, item2] and item2 added
                     if (union.getItemArray().length < depth) {
+                        ++skippedBecauseAlreadyChecked;
                         continue;
                     }
 
@@ -139,6 +149,7 @@ public class MApriori {
                     // So these Items are depend on each other and aren't interesting for the result
                     if (argsInput.getUseSatSolver()) {
                         if (!satSolver.isSatisfiableWithConjunct(union.toIntArray())){
+                            ++ skippedBecauseCantChoose;
                             continue;
                         }
                     }
@@ -146,15 +157,21 @@ public class MApriori {
                     // Do you have to choose this?
                     // e.g. union={1,2} but (-1 OR -2)=-(1 AND 2) is not possible, so you have to choose {1,2} together
                     // and this item depend on each other and aren't interesting for the result
-                    if (depth >= 2 && argsInput.getUseSatSolver()) {
+                    if (argsInput.getUseSatSolver()) {
                         if (!satSolver.isSatisfiableWithClause(Arrays.stream(union.toIntArray()).map(i -> -i).toArray())) {
+                            ++ skippedBecauseYouHaveToChoose;
                             continue;
                         }
                     }
 
                     // All checks passed so search for the support
-                    ItemSet newItemSet = this.orders.getSupport(itemSet, item);
-
+                    ++ searchedForSupportTimes;
+                    ItemSet newItemSet;
+                    if (depth == 1){
+                        newItemSet = this.orders.getSupport(itemSet, item,true);
+                    }else {
+                        newItemSet = this.orders.getSupport(itemSet, item, false);
+                    }
                     // If the itemSet(union) fulfills the support we save them
                     if (newItemSet.getSupport() >= this.argsInput.getMinSupport()) {
                         currentSet.add(newItemSet);
@@ -179,11 +196,30 @@ public class MApriori {
                 }
             }
             stillPossibleItems = newStillPossibleItems;
-            ++depth;
             System.out.println("Found new Candidates in this iteration: " + currentSet.size());
             System.out.println("Candidates contain " + stillPossibleItems.size() + " different Items");
             System.out.println();
+            statusLog.add(depth+", "
+                    +counter+", "
+                    +currentSet.size()+", "
+                    +stillPossibleItems.size()+", "
+                    +searchedForSupportTimes+", "
+                    +skippedBecauseCheckedOtherwise+", "
+                    +skippedBecauseAlreadyChecked+", "
+                    +skippedBecauseCantChoose+", "
+                    +skippedBecauseYouHaveToChoose+", "
+                    + Duration.between(start, Instant.now()).getSeconds());
+            ++depth;
         }
+        TxtReaderWriter.writeListOfStrings("status_log_"
+                + argsInput.getRuleFileWithoutPath() + "_"
+                + argsInput.getOderFileWithoutPath() + "_"
+                + argsInput.getMinSupport() + "_"
+                + argsInput.getMinConfidence() + "_"
+                + argsInput.getDepth() + "_"
+                + argsInput.getUseSatSolver() + "_"
+                + argsInput.getUseProcedure()
+                + ".txt", statusLog);
         return result;
     }
 

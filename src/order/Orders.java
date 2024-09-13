@@ -127,7 +127,12 @@ public class Orders {
         return isHereBool;
     }
 
-    public ItemSet getSupport(ItemSet itemSet1, ItemSet itemSet2) throws WrongIndexForItemException, DifferentOrderSIzeException {
+    public ItemSet getSupport(ItemSet itemSet1, ItemSet itemSet2, boolean onlylItemSet1) throws WrongIndexForItemException, DifferentOrderSIzeException {
+        if (onlylItemSet1){
+            int[] isHere = this.getWhichOrdersSet(itemSet1);
+            itemSet1.setInWhichOrders(isHere, (double) isHere.length /this.orders.length);
+            return itemSet1;
+        }
         if (itemSet1.getItemArray().length == 0 || itemSet2.getItemArray().length == 0){
             throw new Error("itemSet can't be empty");
         }
