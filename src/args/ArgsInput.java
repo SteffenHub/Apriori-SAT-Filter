@@ -10,6 +10,7 @@ import java.util.Arrays;
  */
 public class ArgsInput {
 
+    // TODO add get comment string for input to save c lines in output txt
     /**
      * Private variable that represents the minimum support value.
      * The value is set using the "--minSupport" command line argument.
@@ -54,7 +55,7 @@ public class ArgsInput {
      * Flag indicating whether the M-Apriori algorithm should be used.
      * This variable is set based on the command line arguments provided by the user.
      */
-    private boolean useMApriori;
+    private String useProcedure;
 
     /**
      * Initializes an instance of ArgsInput with the given arguments.
@@ -69,7 +70,7 @@ public class ArgsInput {
         this.ruleFile = "";
         this.orderFile = "";
         this.useSatSolver = true;
-        this.useMApriori = false;
+        this.useProcedure = "MApriori";
         this.readArgs(args);
     }
 
@@ -101,23 +102,28 @@ public class ArgsInput {
             if (arg.equals("--max-depth")){
                 this.depth = Integer.parseInt(args[i+1]);
             }
-            if (arg.equals("--use-m-apriori")){
-                this.useMApriori = Boolean.parseBoolean(args[i+1]);
+            if (arg.equals("--use-operation")){
+                this.useProcedure = args[i+1];
             }
         }
         // check if there is a required argument missing
-        if (Double.isNaN(this.minSupport) || Double.isNaN(this.minConfidence) || depth == -1 || this.ruleFile.isEmpty() || this.orderFile.isEmpty()){
+        if (Double.isNaN(this.minSupport)
+                || Double.isNaN(this.minConfidence)
+                || depth == -1
+                || this.ruleFile.isEmpty()
+                || this.orderFile.isEmpty()
+                || this.useProcedure.isEmpty()){
             throw new ReadArgsException(Arrays.toString(args));
         }
     }
 
     /**
-     * Getter method for the useMApriori field.
+     * Getter method for the useOperation field.
      *
-     * @return true if M-Apriori algorithm should be used, false otherwise.
+     * @return which Apriori procedure should be used
      */
-    public boolean getUseMApriori() {
-        return useMApriori;
+    public String getUseProcedure() {
+        return this.useProcedure;
     }
 
     /**

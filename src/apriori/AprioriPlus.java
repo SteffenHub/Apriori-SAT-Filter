@@ -1,5 +1,6 @@
 package apriori;
 
+import order.DifferentOrderSIzeException;
 import order.Orders;
 import args.ArgsInput;
 import item.Item;
@@ -17,7 +18,7 @@ import java.util.*;
 /**
  * The Apriori class is responsible for running the Apriori algorithm for mining frequent itemSets from given orders.
  */
-public class Apriori {
+public class AprioriPlus {
 
     /**
      * This variable is an instance of the SatSolver class, which provides the core functionality of the Sat4J Solver.
@@ -41,7 +42,7 @@ public class Apriori {
      * @param orders The Orders object containing the transaction data.
      * @param argsInput The ArgsInput object containing the input arguments.
      */
-    public Apriori(SatSolver satSolver, Orders orders, ArgsInput argsInput) {
+    public AprioriPlus(SatSolver satSolver, Orders orders, ArgsInput argsInput) {
         this.satSolver = satSolver;
         this.orders = orders;
         this.argsInput = argsInput;
@@ -53,9 +54,10 @@ public class Apriori {
      *
      * @return A HashMap containing the frequent itemSets as keys and their support as values.
      * @throws TimeoutException if a timeout occurs during the SatSolver execution.
+     * @throws DifferentOrderSIzeException if there are different order sizes in the orders.
      * @throws WrongIndexForItemException if an invalid index is provided for an item.
      */
-    public HashMap<ItemSet, Double> run() throws TimeoutException, WrongIndexForItemException, IOException {
+    public HashMap<ItemSet, Double> run() throws TimeoutException, DifferentOrderSIzeException, WrongIndexForItemException, IOException {
 
         // This is the final result variable it will be filled during the process
         HashMap<ItemSet, Double> result = new HashMap<>();
@@ -156,7 +158,7 @@ public class Apriori {
 
                     // All checks passed so search for the support
                     ++ searchedForSupportTimes;
-                    double support = this.orders.getSupportNormalApriori(union);
+                    double support = this.orders.getSupport(union);
 
                     // If the itemSet(union) fulfills the support we save them
                     if (support >= this.argsInput.getMinSupport()) {

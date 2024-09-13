@@ -92,6 +92,24 @@ public class Orders {
         return support;
     }
 
+    public double getSupportNormalApriori(ItemSet itemSet) throws WrongIndexForItemException {
+        if (itemSet.getItemArray().length == 0) return 0.0;
+        int inHowManyOrders = 0;
+        for (Order order : this.orders) {
+            boolean allIn = true;
+            for (Item item : itemSet.getItemArray()) {
+                if (!order.isIn(item)){
+                    allIn = false;
+                    break;
+                }
+            }
+            if (allIn){
+                ++inHowManyOrders;
+            }
+        }
+        return (double) inHowManyOrders/this.orders.length;
+    }
+
 
     /**
      * Returns a boolean array indicating which orders contain the given item.

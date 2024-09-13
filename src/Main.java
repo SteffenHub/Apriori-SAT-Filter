@@ -1,10 +1,7 @@
 // project imports
-import apriori.MApriori;
+import apriori.*;
 import order.DifferentOrderSIzeException;
 import order.Orders;
-import apriori.Apriori;
-import apriori.Conclusion;
-import apriori.ConclusionBuilder;
 import args.ArgsInput;
 import args.ReadArgsException;
 import item.ItemSet;
@@ -57,12 +54,17 @@ public class Main {
 
         // initiate Apriori and start the combination calculation
         HashMap<ItemSet, Double> allPossibleCombinationFiltered;
-        if (argsInput.getUseMApriori()){
+        if (argsInput.getUseProcedure().equals("MApriori")){
             MApriori apriori = new MApriori(satSolver, orders, argsInput);
             allPossibleCombinationFiltered = apriori.run();
-        }else {
+        }else if (argsInput.getUseProcedure().equals("AprioriPlus")){
+            AprioriPlus aprioriPlus = new AprioriPlus(satSolver, orders, argsInput);
+            allPossibleCombinationFiltered = aprioriPlus.run();
+        } else if (argsInput.getUseProcedure().equals("Apriori")) {
             Apriori apriori = new Apriori(satSolver, orders, argsInput);
             allPossibleCombinationFiltered = apriori.run();
+        } else {
+            throw new ReadArgsException("Procedure unknown. Use one of: MApriori, AprioriPlus, Apriori");
         }
         // Print the needed time
         Instant end = Instant.now();
@@ -80,7 +82,8 @@ public class Main {
                 + argsInput.getMinSupport() + "_"
                 + argsInput.getMinConfidence() + "_"
                 + argsInput.getDepth() + "_"
-                + argsInput.getUseSatSolver()
+                + argsInput.getUseSatSolver() + "_"
+                + argsInput.getUseProcedure()
                 + ".txt", allPossibleCombinationFilteredString);
 
         // generate the conclusions with all the possible combinations found in Apriori process
@@ -97,7 +100,8 @@ public class Main {
                 + argsInput.getMinSupport() + "_"
                 + argsInput.getMinConfidence() + "_"
                 + argsInput.getDepth() + "_"
-                + argsInput.getUseSatSolver()
+                + argsInput.getUseSatSolver() + "_"
+                + argsInput.getUseProcedure()
                 + ".txt", allConclusionsString);
 
         // Print the needed time
