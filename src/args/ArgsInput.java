@@ -102,7 +102,7 @@ public class ArgsInput {
             if (arg.equals("--max-depth")){
                 this.depth = Integer.parseInt(args[i+1]);
             }
-            if (arg.equals("--use-operation")){
+            if (arg.equals("--use-procedure")){
                 this.useProcedure = args[i+1];
             }
         }

@@ -8,8 +8,8 @@ M-Apriori+ time for calculation search all combinations: 463sec
 M-Apriori+ time for calculation: 805sec
 M-Apriori+ save support of more itemSets: time for calculation search all combinations: 291sec
 M-Apriori+ save support of more itemSets: time for calculation: 332sec
-Apriori: time for calculation search all combinations: 184sec
-Apriori: time for calculation: 209sec
+Apriori: time for calculation search all combinations: 707sec
+Apriori: time for calculation: 737sec
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.4_0.4_200_true
 M-Apriori SET OF INTEGER: Out Of Memory with 21 GB at 3 minutes and 27 sec
@@ -20,8 +20,8 @@ M-Apriori+ time for calculation search all combinations: 26sec
 M-Apriori+ time for calculation: 31sec
 M-Apriori+ save support of more itemSets: time for calculation search all combinations: 16sec
 M-Apriori+ save support of more itemSets: time for calculation: 16sec
-Apriori: time for calculation search all combinations: 18sec
-Apriori: time for calculation: 19sec
+Apriori: time for calculation search all combinations: 38sec
+Apriori: time for calculation: 39sec
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.6_0.6_200_true
 M-Apriori SET OF INTEGER: time for calculation search all combinations: 39sec
@@ -33,7 +33,7 @@ M-Apriori+ time for calculation: 3sec
 M-Apriori+ save support of more itemSets: time for calculation search all combinations: 2sec
 M-Apriori+ save support of more itemSets: time for calculation: 2sec
 Apriori: time for calculation search all combinations: 4sec
-Apriori: time for calculation: 4sec
+Apriori: time for calculation: 5sec
 
 allPossibleCombination_Apriori_cnfBuilder100VarsVariance9995700077_randomCarBuilder_result_500000_freq_result_cnfBuilder100VarsVariance9995700077_100Decimal_0.8_0.8_200_true
 M-Apriori SET OF INTEGER: time for calculation search all combinations: 2sec
