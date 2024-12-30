@@ -1,0 +1,14 @@
+[1 -> 5] support: 0.4 confidence: 1.0
+[5 -> 1] support: 0.4 confidence: 0.5714285714285715
+[3 -> 4] support: 0.5 confidence: 1.0
+[4 -> 3] support: 0.5 confidence: 0.5
+[4 -> 5] support: 0.7 confidence: 0.7
+[5 -> 4] support: 0.7 confidence: 1.0
+[1 -> 4] support: 0.4 confidence: 1.0
+[4 -> 1] support: 0.4 confidence: 0.4
+[1 -> 4,5] support: 0.4 confidence: 1.0
+[4 -> 1,5] support: 0.4 confidence: 0.4
+[1,4 -> 5] support: 0.4 confidence: 1.0
+[5 -> 1,4] support: 0.4 confidence: 0.5714285714285715
+[1,5 -> 4] support: 0.4 confidence: 1.0
+[4,5 -> 1] support: 0.4 confidence: 0.5714285714285715

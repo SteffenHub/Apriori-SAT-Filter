@@ -1,0 +1,18 @@
+c Used Seed: 550772524773459026
+c Execution time: 0 seconds
+c Number of variables: 6
+c Generated models: 10
+c Used CNF file: input_data/cnf/Phone_example.cnf
+c Used Installation rates file: input_data/installation_rates/freq_result_Phone_example_10Decimal.txt
+c Used procedure: AllesZufaellig
+c Average deviation: 0.03333333333333333
+001101
+001110
+001101
+001101
+010110
+100110
+100110
+100110
+100110
+001110

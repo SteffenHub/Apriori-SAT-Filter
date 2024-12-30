@@ -1,0 +1,5 @@
+depth, checked combinations, survived itemSets, survived items, searched for support, skipped because checked already checked in other combination, skipped because already checked in previous iterations, skipped because you can't choose the combination, skipped because you have to choose the combination, calculation time in sec
+1, 6, 4, 4, 6, 0, 0, 0, 0, 0
+2, 16, 4, 4, 8, 4, 4, 0, 0, 0
+3, 16, 1, 3, 6, 2, 8, 0, 0, 0
+4, 3, 0, 0, 0, 0, 3, 0, 0, 0

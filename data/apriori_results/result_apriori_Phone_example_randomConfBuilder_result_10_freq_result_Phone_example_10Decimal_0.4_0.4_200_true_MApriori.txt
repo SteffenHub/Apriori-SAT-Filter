@@ -1,0 +1,2 @@
+[1 -> 5] support: 0.4 confidence: 1.0
+[5 -> 1] support: 0.4 confidence: 0.5714285714285715
