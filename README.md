@@ -103,7 +103,7 @@ The result:
 
 
 # Rules
-As example, we use a configurable product like a smartphone that comes with various options such as different storage capacities,  
+As example, we use a configurable product like a smartphone that comes with various options such as different storage capacities, 
 colors, and RAM capacities.
 - 1: 64 GB storage
 - 2: 128 GB storage
