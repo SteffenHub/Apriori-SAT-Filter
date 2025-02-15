@@ -77,7 +77,7 @@ The result:
 > [4 -> 1] support: 0.4 confidence: 0.4
 > [4 -> 1,5] support: 0.4 confidence: 0.4
 
-> Useless solutions, because 4 (Back color) is always true  
+> Useless solutions, because 4 (Black color) is always true  
 > The confidence is always 100%, because of the confidence calculation:  
 > Confidence(A->B) = Support(AuB)/ Support(A) = 100%/ 100% = 100% 
 > 
