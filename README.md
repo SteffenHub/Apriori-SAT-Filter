@@ -1,11 +1,15 @@
 # Apriori-SAT-Filter
-
-
 This code is an improved version of the Apriori-algorithm
 using a Sat-Solver.   
 The Apriori-algorithm is an algorithm for association rule mining.  
 To run the code and get an advantage of a Sat-Solver you
 have to provide a ruleset and sales data.
+
+# Related Paper
+This Code is part of a research paper. available at:  
+[Schmidt, T.; Marbach, S.; Mantwill, F. (2025). Efficient product portfolio optimization with SAT-based association rule mining using Apriori algorithm. In: Proceedings of the Design Society, Volume 5 (ICED 2025), Cambridge University Press, Dallas, TX, USA, pp. 1455–1464. ](https://doi.org/10.1017/pds.2025.10159)
+
+
 
 
 # Sales
